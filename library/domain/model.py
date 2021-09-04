@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List
+from typing import List, Iterable
 
 
 class Publisher:
@@ -268,69 +268,6 @@ class Review:
         return f'<Review of book {self.book}, rating = {self.rating}, timestamp = {self.timestamp}>'
 
 
-class User:
-
-    def __init__(self, user_name: str, password: str):
-        if user_name == "" or not isinstance(user_name, str):
-            self.__user_name = None
-        else:
-            self.__user_name = user_name.strip().lower()
-
-        if password == "" or not isinstance(password, str) or len(password) < 7:
-            self.__password = None
-        else:
-            self.__password = password
-
-        self.__read_books = []
-        self.__reviews = []
-        self.__pages_read = 0
-
-    @property
-    def user_name(self) -> str:
-        return self.__user_name
-
-    @property
-    def password(self) -> str:
-        return self.__password
-
-    @property
-    def read_books(self) -> List[Book]:
-        return self.__read_books
-
-    @property
-    def reviews(self) -> List[Review]:
-        return self.__reviews
-
-    @property
-    def pages_read(self) -> int:
-        return self.__pages_read
-
-    def read_a_book(self, book: Book):
-        if isinstance(book, Book):
-            self.__read_books.append(book)
-            if book.num_pages is not None:
-                self.__pages_read += book.num_pages
-
-    def add_review(self, review: Review):
-        if isinstance(review, Review):
-            # Review objects are in practice always considered different due to their timestamp.
-            self.__reviews.append(review)
-
-    def __repr__(self):
-        return f'<User {self.user_name}>'
-
-    def __eq__(self, other):
-        if not isinstance(other, self.__class__):
-            return False
-        return other.user_name == self.user_name
-
-    def __lt__(self, other):
-        return self.user_name < other.user_name
-
-    def __hash__(self):
-        return hash(self.user_name)
-
-
 class BooksInventory:
 
     def __init__(self):
@@ -368,3 +305,75 @@ class BooksInventory:
             if self.__books[book_id].title == book_title:
                 return self.__books[book_id]
         return None
+
+
+class User:
+    def __init__(self, user_name: str, password: str):
+        self.__user_name: str = user_name
+        self.__password: str = password
+        self.__books: List[Book] = list()
+
+    @property
+    def user_name(self) -> str:
+        return self.__user_name
+
+    @property
+    def password(self) -> str:
+        return self.__password
+
+    @property
+    def books(self) -> Iterable['Book']:
+        return iter(self.__books)
+
+    def read_a_book(self, book: Book):
+        if isinstance(book, Book):
+            self.__read_books.append(book)
+            if book.num_pages is not None:
+                self.__pages_read += book.num_pages
+
+    @property
+    def read_books(self) -> List[Book]:
+        return self.__read_books
+
+    def __repr__(self):
+        return f'<User {self.user_name}>'
+
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        return other.user_name == self.user_name
+
+    def __lt__(self, other):
+        return self.user_name < other.user_name
+
+    def __hash__(self):
+        return hash(self.user_name)
+
+
+class Tag:
+    def __init__(self, tag_name: str):
+        self.__tag_name: str = tag_name
+        self.__tagged_books: List[Book] = list()
+
+    @property
+    def tag_name(self) -> str:
+        return self.__tag_name
+
+    @property
+    def tagged_books(self) -> Iterable[Book]:
+        return iter(self.__tagged_books)
+
+    @property
+    def number_of_tagged_books(self) -> int:
+        return len(self.__tagged_books)
+
+    def is_applied_to(self, book: Book) -> bool:
+        return book in self.__tagged_books
+
+    def add_article(self, book: Book):
+        self.__tagged_books.append(book)
+
+    def __eq__(self, other):
+        if not isinstance(other, Tag):
+            return False
+        return other.tag_name == self.tag_name
