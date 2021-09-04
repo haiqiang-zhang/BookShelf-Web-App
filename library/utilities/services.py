@@ -14,16 +14,16 @@ def get_tag_names(repo: AbstractRepository):
 
 def get_random_books(quantity, repo: AbstractRepository):
     book_count = repo.get_number_of_books()
+    if book_count > 0:
+        if quantity >= book_count:
+            # Reduce the quantity of ids to generate if the repository has an insufficient number of articles.
+            quantity = book_count - 1
 
-    if quantity >= book_count:
-        # Reduce the quantity of ids to generate if the repository has an insufficient number of articles.
-        quantity = book_count - 1
+        # Pick distinct and random articles.
+        random_ids = random.sample(range(0, book_count), quantity)
+        books = repo.get_books_by_index(random_ids)
 
-    # Pick distinct and random articles.
-    random_ids = random.sample(range(1, book_count), quantity)
-    books = repo.get_book_by_id(random_ids)
-
-    return books_to_dict(books)
+        return books_to_dict(books)
 
 
 # ============================================

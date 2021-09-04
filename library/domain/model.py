@@ -36,6 +36,8 @@ class Publisher:
         return hash(self.name)
 
 
+
+
 class Author:
 
     def __init__(self, author_id: int, author_full_name: str):
@@ -97,7 +99,6 @@ class Author:
 
 
 class Book:
-
     def __init__(self, book_id: int, book_title: str):
         if not isinstance(book_id, int):
             raise ValueError
@@ -116,7 +117,13 @@ class Book:
         self.__release_year = None
         self.__ebook = None
         self.__num_pages = None
+        self.__reviews: List['Review'] = list()
+        self.__tags: List[Tag] = list()
 
+
+    @property
+    def reviews(self) -> Iterable['Review']:
+        return iter(self.__reviews)
 
     @property
     def book_id(self) -> int:
@@ -206,6 +213,30 @@ class Book:
         if isinstance(num_pages, int) and num_pages >= 0:
             self.__num_pages = num_pages
 
+    @property
+    def number_of_comments(self) -> int:
+        return len(self.__comments)
+
+    @property
+    def number_of_tags(self) -> int:
+        return len(self.__tags)
+
+    @property
+    def tags(self) -> Iterable['Tag']:
+        return iter(self.__tags)
+
+    def is_tagged_by(self, tag: 'Tag'):
+        return tag in self.__tags
+
+    def is_tagged(self) -> bool:
+        return len(self.__tags) > 0
+
+    def add_review(self, review: 'Review'):
+        self.__reviews.append(review)
+
+    def add_tag(self, tag: 'Tag'):
+        self.__tags.append(tag)
+
     def __repr__(self):
         return f'<Book {self.title}, book id = {self.book_id}>'
 
@@ -221,9 +252,73 @@ class Book:
         return hash(self.book_id)
 
 
+
+
+class User:
+    def __init__(self, user_name: str, password: str):
+        if user_name == "" or not isinstance(user_name, str):
+            self.__user_name = None
+        else:
+            self.__user_name = user_name.strip().lower()
+
+        if password == "" or not isinstance(password, str) or len(password) < 7:
+            self.__password = None
+        else:
+            self.__password = password
+
+        self.__read_books = []
+        self.__reviews = []
+        self.__pages_read = 0
+
+    @property
+    def user_name(self) -> str:
+        return self.__user_name
+
+    @property
+    def password(self) -> str:
+        return self.__password
+
+    @property
+    def read_books(self) -> List[Book]:
+        return self.__read_books
+
+    @property
+    def reviews(self) -> List['Review']:
+        return self.__reviews
+
+    @property
+    def pages_read(self) -> int:
+        return self.__pages_read
+
+    def read_a_book(self, book: Book):
+        if isinstance(book, Book):
+            self.__read_books.append(book)
+            if book.num_pages is not None:
+                self.__pages_read += book.num_pages
+
+    def add_review(self, review: 'Review'):
+        if isinstance(review, Review):
+            # Review objects are in practice always considered different due to their timestamp.
+            self.__reviews.append(review)
+
+    def __repr__(self):
+        return f'<User {self.user_name}>'
+
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        return other.user_name == self.user_name
+
+    def __lt__(self, other):
+        return self.user_name < other.user_name
+
+    def __hash__(self):
+        return hash(self.user_name)
+
+
 class Review:
 
-    def __init__(self, book: Book, review_text: str, rating: int):
+    def __init__(self, book: Book, review_text: str, rating: int, user: User):
         if isinstance(book, Book):
             self.__book = book
         else:
@@ -239,11 +334,21 @@ class Review:
         else:
             raise ValueError
 
+
+        if isinstance(user, User):
+            self.__user = user
+        else:
+            self.__user = None
+
         self.__timestamp = datetime.now()
 
     @property
     def book(self) -> Book:
         return self.__book
+
+    @property
+    def user(self) -> User:
+        return self.__user
 
     @property
     def review_text(self) -> str:
@@ -266,6 +371,9 @@ class Review:
 
     def __repr__(self):
         return f'<Review of book {self.book}, rating = {self.rating}, timestamp = {self.timestamp}>'
+
+
+
 
 
 class BooksInventory:
@@ -307,49 +415,6 @@ class BooksInventory:
         return None
 
 
-class User:
-    def __init__(self, user_name: str, password: str):
-        self.__user_name: str = user_name
-        self.__password: str = password
-        self.__books: List[Book] = list()
-
-    @property
-    def user_name(self) -> str:
-        return self.__user_name
-
-    @property
-    def password(self) -> str:
-        return self.__password
-
-    @property
-    def books(self) -> Iterable['Book']:
-        return iter(self.__books)
-
-    def read_a_book(self, book: Book):
-        if isinstance(book, Book):
-            self.__read_books.append(book)
-            if book.num_pages is not None:
-                self.__pages_read += book.num_pages
-
-    @property
-    def read_books(self) -> List[Book]:
-        return self.__read_books
-
-    def __repr__(self):
-        return f'<User {self.user_name}>'
-
-    def __eq__(self, other):
-        if not isinstance(other, self.__class__):
-            return False
-        return other.user_name == self.user_name
-
-    def __lt__(self, other):
-        return self.user_name < other.user_name
-
-    def __hash__(self):
-        return hash(self.user_name)
-
-
 class Tag:
     def __init__(self, tag_name: str):
         self.__tag_name: str = tag_name
@@ -364,7 +429,7 @@ class Tag:
         return iter(self.__tagged_books)
 
     @property
-    def number_of_tagged_books(self) -> int:
+    def number_of_tagged_articles(self) -> int:
         return len(self.__tagged_books)
 
     def is_applied_to(self, book: Book) -> bool:
@@ -377,3 +442,13 @@ class Tag:
         if not isinstance(other, Tag):
             return False
         return other.tag_name == self.tag_name
+
+
+
+
+def make_review(review_text: str, user: User, book: Book, rating: int, timestamp: datetime = datetime.today()):
+    review = Review(book, review_text, rating, timestamp, user)
+    user.add_review(review)
+    book.add_review(review)
+
+    return review
