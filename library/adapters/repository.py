@@ -43,7 +43,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_books_by_index(self,index: int):
+    def get_books_by_index(self,index: List[int]) -> List[Book]:
         raise NotImplementedError
 
     @abc.abstractmethod

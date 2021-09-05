@@ -446,8 +446,8 @@ class Tag:
 
 
 
-def make_review(review_text: str, user: User, book: Book, rating: int, timestamp: datetime = datetime.today()):
-    review = Review(book, review_text, rating, timestamp, user)
+def make_review(review_text: str, user: User, book: Book, rating: int):
+    review = Review(book, review_text, rating, user)
     user.add_review(review)
     book.add_review(review)
 

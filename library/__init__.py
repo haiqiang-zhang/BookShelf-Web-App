@@ -4,6 +4,8 @@ from flask import Flask, render_template
 
 import library.adapters.repository as repo
 from library.adapters.memory_repository import MemoryRepository
+from library.utilities import services
+from library.adapters import memory_repository
 
 
 # TODO: Access to the books should be implemented via the repository pattern and using blueprints, so this can not stay here!
@@ -45,6 +47,9 @@ def create_app(test_config = None):
 
     # Create the MemoryRepository implementation for a memory-based repository.
     repo.repo_instance = MemoryRepository()
+    memory_repository.populate(data_path, repo.repo_instance)
+
+
 
 
     with app.app_context():
@@ -55,10 +60,6 @@ def create_app(test_config = None):
         from .authentication import authentication
         app.register_blueprint(authentication.authentication_blueprint)
 
-    @app.route('/')
-    def home():
-        some_book = create_some_book()
-        # Use Jinja to customize a predefined html page rendering the layout for showing a single book.
-        return render_template('home.html', book=some_book)
+
 
     return app

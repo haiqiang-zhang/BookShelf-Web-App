@@ -63,7 +63,7 @@ class MemoryRepository(AbstractRepository):
         books = [self.__books_index[id] for id in existing_ids]
         return books
 
-    def get_books_by_index(self, index: List[int]):
+    def get_books_by_index(self, index: List[int])-> List[Book]:
 
         return [self.__books[index] for index in index]
 
@@ -215,7 +215,6 @@ def load_reviews(data_path: Path, repo: MemoryRepository, users):
             review_text=data_row[3],
             user=users[data_row[1]],
             book=repo.get_book(int(data_row[2])),
-            timestamp=datetime.fromisoformat(data_row[4]),
             rating=int(data_row[5])
         )
         repo.add_review(review)

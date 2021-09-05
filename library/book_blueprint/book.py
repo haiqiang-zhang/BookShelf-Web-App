@@ -8,10 +8,10 @@ book_blueprint = Blueprint(
 )
 
 
-@book_blueprint.route('/')
-def home():
-    return render_template(
-        'home.html',
-        find_person_url=url_for('people_bp.find_person'),
-        list_people_url=url_for('people_bp.list_people')
-    )
+# @book_blueprint.route('/')
+# def home():
+#     return render_template(
+#         'home.html',
+#         find_person_url=url_for('people_bp.find_person'),
+#         list_people_url=url_for('people_bp.list_people')
+#     )
