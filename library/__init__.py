@@ -60,6 +60,8 @@ def create_app(test_config = None):
         from .authentication import authentication
         app.register_blueprint(authentication.authentication_blueprint)
 
+        from .book_blueprint import book
+        app.register_blueprint(book.book_blueprint)
 
 
     return app

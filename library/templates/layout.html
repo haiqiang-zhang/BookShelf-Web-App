@@ -1,45 +1,51 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Bookshelf</title>
 
     <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/main.css') }}"
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/main.css') }}"
     />
 
-	<link
-      rel="bookmark"
-	  type="image/x-icon"
-      href="favicon.ico"
+    <link
+            rel="bookmark"
+            type="image/x-icon"
+            href="favicon.ico"
     />
 
-	<link
-      rel="icon"
-      href="favicon.ico"
+    <link
+            rel="icon"
+            href="favicon.ico"
     />
-  </head>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-  <body>
-    <div id="body">
-      <!-- Include navigation partial. -->
-      {% include 'navigation.html' %}
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- style css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 
-      <div id="content-2">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+<div id="body">
+    <!-- Include navigation partial. -->
+    {% include 'navigation.html' %}
+
+    <div id="content-2">
         <!-- Include header partial. -->
         {% include 'header.html' %}
 
         <div id="container">
-          <!-- Main content block to be supplied by page. -->
-          {% block content %} {% endblock %}
+            <!-- Main content block to be supplied by page. -->
+            {% block content %} {% endblock %}
 
         </div>
 
-      </div>
     </div>
-  </body>
+</div>
+</body>
 </html>

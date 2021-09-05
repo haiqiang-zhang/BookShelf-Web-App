@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h2> User Homepage</h2>
+
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="power_full">
+                <div class="icon_user_homepage"><img src="{{ url_for('static', filename='images/badge.png') }}"
+                                                     class="user_img"></div>
+                <h2 class="powerful_text">Surpass</h2>
+                <p class="making_tetx">making it look like readable English. Many desktop publishing packages and web
+                    page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will
+                    uncover many web sites still </p>
+            </div>
+
+        </div>
+        <div class="col-sm-4">
+            <div class="power">
+                <div class="icon_user_homepage"><a href="#"><img
+                        src="{{ url_for('static', filename='images/viewed_book.png') }}" class="user_img"></a></div>
+                <h2 class="totaly_text">Number of Viewed Book</h2>
+                <p class="making">making it look like readable English. Many desktop publishing packages and web page
+                    editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover
+                    many web sites still </p>
+            </div>
+
+        </div>
+        <div class="col-sm-4">
+            <div class="power">
+                <div class="icon_user_homepage"><a href="#"><img
+                        src="{{ url_for('static', filename='images/headfone-icon.png') }}" class="user_img"></a></div>
+                <h2 class="totaly_text">Number of Review</h2>
+                <p class="making">making it look like readable English. Many desktop publishing packages and web page
+                    editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover
+                    many web sites still </p>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

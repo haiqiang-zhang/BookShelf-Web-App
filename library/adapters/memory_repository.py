@@ -34,13 +34,16 @@ class MemoryRepository(AbstractRepository):
 
     def get_book(self, id: int) -> Book:
         book = None
-
         try:
             book = self.__books_index[id]
         except KeyError:
             pass  # Ignore exception and return None.
 
         return book
+
+
+    def get_all_books(self) -> List[Book]:
+        return self.__books
 
     def get_books_by_release_year(self, release_year: int) -> List[Book]:
         matching_articles = list()

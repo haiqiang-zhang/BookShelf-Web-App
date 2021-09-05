@@ -40,6 +40,8 @@ class BooksJSONReader:
             book_instance.publisher = Publisher(book_json['publisher'])
             if book_json['publication_year'] != "":
                 book_instance.release_year = int(book_json['publication_year'])
+            if book_json['image_url'] != "":
+                book_instance.image_url = book_json['image_url']
             if book_json['is_ebook'].lower() == 'false':
                 book_instance.ebook = False
             else:

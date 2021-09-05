@@ -119,6 +119,7 @@ class Book:
         self.__num_pages = None
         self.__reviews: List['Review'] = list()
         self.__tags: List[Tag] = list()
+        self.__image_url = ""
 
 
     @property
@@ -154,6 +155,14 @@ class Book:
             self.__release_year = release_year
         else:
             raise ValueError
+
+    @property
+    def image_url(self) -> str:
+        return self.__image_url
+
+    @image_url.setter
+    def image_url(self, url: str):
+        self.__image_url = url
 
     @property
     def description(self) -> str:
