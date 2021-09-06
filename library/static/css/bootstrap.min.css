@@ -143,31 +143,6 @@ sup {
     top: -.5em
 }
 
-a {
-    color: #007bff;
-    text-decoration: none;
-    background-color: transparent;
-    -webkit-text-decoration-skip: objects
-}
-
-a:hover {
-    color: #0056b3;
-    text-decoration: underline
-}
-
-a:not([href]):not([tabindex]) {
-    color: inherit;
-    text-decoration: none
-}
-
-a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
-    color: inherit;
-    text-decoration: none
-}
-
-a:not([href]):not([tabindex]):focus {
-    outline: 0
-}
 
 code, kbd, pre, samp {
     font-family: monospace, monospace;
@@ -7478,9 +7453,6 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
     margin-right: .5rem !important
 }
 
-.mb-2, .my-2 {
-    margin-bottom: .5rem !important
-}
 
 .ml-2, .mx-2 {
     margin-left: .5rem !important

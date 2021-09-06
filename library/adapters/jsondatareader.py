@@ -63,5 +63,4 @@ class BooksJSONReader:
                     if int(author_json['author_id']) == numerical_id:
                         author_name = author_json['name']
                 book_instance.add_author(Author(numerical_id, author_name))
-
             self.__dataset_of_books.append(book_instance)

@@ -28,6 +28,12 @@ class MemoryRepository(AbstractRepository):
     def get_user(self, user_name) -> User:
         return next((user for user in self.__users if user.user_name == user_name), None)
 
+    def get_all_user(self) -> List[User]:
+        return self.__users
+
+    def get_user_num_of_read_book(self, user:User) -> int:
+        return len(user.read_books)
+
     def add_book(self, book: Book):
         insort_left(self.__books, book)
         self.__books_index[book.book_id] = book
@@ -206,6 +212,10 @@ def load_users(data_path: Path, repo: MemoryRepository):
             user_name=data_row[1],
             password=generate_password_hash(data_row[2])
         )
+        id_list = data_row[3].strip().split(",")
+        for id in id_list:
+            if id != "":
+                user.read_books.append(repo.get_book(int(id)))
         repo.add_user(user)
         users[data_row[0]] = user
     return users

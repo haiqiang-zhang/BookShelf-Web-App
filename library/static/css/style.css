@@ -88,11 +88,7 @@ p {
      color: #110f0a;
 }
 
-a {
-     color: #ffffff;
-     text-decoration: none;
-     outline: none !important;
-}
+
 
 .layout_padding {
    padding: 90px 0;
@@ -148,9 +144,7 @@ ul, li, ol {
     vertical-align: middle;
 }
 
-.main-menu ul>li a:hover {
-    color: #fff;
-}
+
 
 .mean-container .mean-bar { background: #2aab7c;}
 
@@ -192,8 +186,7 @@ ul, li, ol {
     margin-right: 25px;
 }
 
-a:hover {
-    color: #fff;}
+
 
 .get_bga:hover {
     color: #000	;}
@@ -319,7 +312,7 @@ button.btn.btn-primary, button.btn.btn-primary:hover, button.btn.btn-primary:foc
     margin-bottom: 30px;
 }
 
-.read_bt a:hover{ color: #ffffff;}
+
 
 .about_main{ 
 	width: 100%;
@@ -447,7 +440,7 @@ button.btn.btn-primary, button.btn.btn-primary:hover, button.btn.btn-primary:foc
     margin-bottom: 30px;
 }
 
-.read_more a:hover{ color: #ffffff;}
+
 
 .contact_section{ width: 100%; float: left; margin-top: 65px; }
 
@@ -513,9 +506,7 @@ button.main_bt {
     font-size: 22px;
 }
 
-button.main_bt a:hover {
-	color: #ffffff;
-}
+
 
 .send_btn{
 	width: 30%;
@@ -572,7 +563,7 @@ button.main_bt a:hover {
 .menu ul{margin: 0px; padding: 0px;}
 
 .menu ul li{ color: #fcfcfc; }
-.menu ul li a:hover{ color: #fcfcfc; }
+
 .useful_text{ 
 	width: 100%; 
 	float: left; 
@@ -611,7 +602,7 @@ button.main_bt a:hover {
 	height: auto; padding-bottom: 5px; padding-top: 5px; }
 .copy_text{ width: 100%; float: left; text-align: center; color: #ffffff;   
   margin-left: 0px; margin-right: 0px; }
-.copy_text a:hover{ color: #000; }
+
 .footer_menu{ padding-right: 10px; }
 
 

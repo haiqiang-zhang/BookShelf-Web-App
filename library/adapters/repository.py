@@ -30,6 +30,10 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_all_user(self) -> List[User]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def add_book(self, book: Book):
         """ Adds an Article to the repository. """
         raise NotImplementedError
@@ -40,6 +44,9 @@ class AbstractRepository(abc.ABC):
 
         If there is no Article with the given id, this method returns None.
         """
+        raise NotImplementedError
+
+    def get_user_num_of_read_book(self, user: User) -> int:
         raise NotImplementedError
 
     @abc.abstractmethod

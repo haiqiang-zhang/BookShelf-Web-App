@@ -291,6 +291,11 @@ class User:
     def read_books(self) -> List[Book]:
         return self.__read_books
 
+    @read_books.setter
+    def read_books(self, read_list:List[Book]):
+        self.__read_books = read_list
+
+
     @property
     def reviews(self) -> List['Review']:
         return self.__reviews

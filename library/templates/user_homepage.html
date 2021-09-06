@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <h2> User Homepage</h2>
+    <h1> User Homepage</h1>
 
 
     <div class="row">
@@ -9,10 +9,7 @@
             <div class="power_full">
                 <div class="icon_user_homepage"><img src="{{ url_for('static', filename='images/badge.png') }}"
                                                      class="user_img"></div>
-                <h2 class="powerful_text">Surpass</h2>
-                <p class="making_tetx">making it look like readable English. Many desktop publishing packages and web
-                    page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will
-                    uncover many web sites still </p>
+                <h2 class="powerful_text">You've over {{ percentage }}% users!</h2>
             </div>
 
         </div>
@@ -20,25 +17,35 @@
             <div class="power">
                 <div class="icon_user_homepage"><a href="#"><img
                         src="{{ url_for('static', filename='images/viewed_book.png') }}" class="user_img"></a></div>
-                <h2 class="totaly_text">Number of Viewed Book</h2>
-                <p class="making">making it look like readable English. Many desktop publishing packages and web page
-                    editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover
-                    many web sites still </p>
+                <h2 class="totaly_text">You've read {{ book }} books!</h2>
             </div>
 
         </div>
         <div class="col-sm-4">
             <div class="power">
                 <div class="icon_user_homepage"><a href="#"><img
-                        src="{{ url_for('static', filename='images/headfone-icon.png') }}" class="user_img"></a></div>
-                <h2 class="totaly_text">Number of Review</h2>
-                <p class="making">making it look like readable English. Many desktop publishing packages and web page
-                    editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover
-                    many web sites still </p>
+                        src="{{ url_for('static', filename='images/blank-page.png') }}" class="user_img"></a></div>
+                <h2 class="totaly_text">You've read a total of {{ page }} pages!</h2>
             </div>
         </div>
     </div>
 
+
+
+
+    <main class="user_homepage_function">
+
+
+        <ul class="user_homepage_function_ul">
+            <li><a href="#">Read Books</a></li>
+            <li><a href="#">Favourite Books</a></li>
+            <li><a href="#">Add Books</a></li>
+            <li><a href="#">Delete Books</a></li>
+        </ul>
+
+
+
+    </main>
 
 
 {% endblock %}

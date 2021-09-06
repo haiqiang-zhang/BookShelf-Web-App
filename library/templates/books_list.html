@@ -1,34 +1,69 @@
 {% extends 'layout.html' %} {% block content %}
-    <main class="all_book_main" >
-    <table width="100%" cellpadding="10">
-        {% for book in books %}
-            <tbody>
-            <tr>
-                <td width="50" valign="top" class="book_list">
-                    <a class="nbg" href="{{ book.link }}" title="book.title">
-                        <img src="{{ book.image_url }}" width="75" class="">
-                    </a>
-                </td>
-
-                <td valign="top" class="book_list">
-                    <p class="ul"></p>
-                    <div class="pl2">
-                        <a href="{{ book.url }}" class="">
-                            <h3>{{ book.title }} </h3>
+    <main class="all_book_main">
+        <table width="100%" cellpadding="10">
+            {% for book in books %}
+                <tbody>
+                <tr>
+                    <td width="50" valign="top" class="book_list">
+                        <a class="nbg" href="{{ book.link }}" title="book.title">
+                            <img src="{{ book.image_url }}" width="75" class="">
                         </a>
-                        <p class="pl">{{ book.publication_year }}({{ book.country_code }}) / Book
-                            publisher: {{ book.publisher }}</p>
-                        <div class="star clearfix">
-                            <span class="allstar30"></span>
-                            <span class="rating">Average rating: {{ book. average_rating }}</span>
-                            <span class="desc">Description: {{ book.description }}</span>
-                        </div>
-                    </div>
-                </td>
+                    </td>
 
-            </tr>
-            </tbody>
-        {% endfor %}
-    </table>
+                    <td valign="top" class="book_list">
+                        <p class="ul"></p>
+                        <div class="pl2">
+                            <a href="{{ book.url }}" class="">
+                                <h3>{{ book.title }} </h3>
+                            </a>
+                            <p class="pl">{{ book.publication_year }}({{ book.country_code }}) / Book
+                                publisher: {{ book.publisher }}</p>
+                            <div class="star clearfix">
+                                <span class="allstar30"></span>
+                                <span class="rating">Average rating: {{ book. average_rating }}</span>
+                                <span class="desc">Description: {{ book.description }}</span>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+
+        <div class="change_pages">
+            <div class="tm-prev-next-wrapper">
+                {% if prev is none %}
+                    <a href="#" class="prev-next-disable">Prev</a>
+                {% else %}
+                    <a href="{{ prev }}" class="prev-next">Prev</a>
+                {% endif %}
+                {% if next is none %}
+                    <a href="#" class="prev-next-disable">Next</a>
+                {% else %}
+                    <a href="{{ next }}" class="prev-next">Next</a>
+                {% endif %}
+            </div>
+            <div class="tm-paging-wrapper">
+                <span class="d-inline-block mr-3">Page</span>
+                <nav class="tm-paging-nav d-inline-block">
+                    <ul>
+                        {% for index in pages %}
+                            {% if target_page == index %}
+                                <li class="tm-paging-item active">
+                                    <a href="{{ url_for('book_bp.books_list', page=index) }}"
+                                       class="page_index_a tm-paging-link">{{ index }}</a>
+                                </li>
+                            {% else %}
+                                <li class="tm-paging-item">
+                                    <a href="{{ url_for('book_bp.books_list', page=index) }}"
+                                       class="page_index_a tm-paging-link">{{ index }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </main>
 {% endblock %}
