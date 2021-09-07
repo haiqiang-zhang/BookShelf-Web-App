@@ -42,8 +42,9 @@ class MemoryRepository(AbstractRepository):
         book = None
         try:
             book = self.__books_index[id]
+
         except KeyError:
-            pass  # Ignore exception and return None.
+            book = None
 
         return book
 

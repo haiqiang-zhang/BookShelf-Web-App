@@ -1,9 +1,12 @@
-from flask import Blueprint, render_template, url_for, request
+from flask import Blueprint, render_template, url_for, request, redirect
 from flask_wtf import FlaskForm
+from wtforms import TextAreaField, HiddenField, SubmitField, SelectField
 from wtforms import IntegerField, SubmitField
+from wtforms.fields.html5 import SearchField
 from wtforms.validators import DataRequired
 from library.adapters.repository import repo_instance
 from library.adapters.repository import AbstractRepository
+from library.book_blueprint.services import form_book_list
 
 book_blueprint = Blueprint(
     'book_bp', __name__
@@ -21,29 +24,9 @@ book_blueprint = Blueprint(
 
 @book_blueprint.route('/books_list')
 def books_list():
-    book_page = list()
-    for index in range(len(repo_instance.get_all_books())):
-        book_page.append((repo_instance.get_all_books()[index], (index // 7) + 1))
+    books_list = repo_instance.get_all_books()
     target_page = request.args.get('page')
-    if target_page is None:
-        target_page = 1
-    target_page = int(target_page)
-    books = []
-    for index in range(len(book_page)):
-        if book_page[index][1] == target_page:
-            books.append(book_page[index][0])
-
-    pages = [index for index in range(1, book_page[-1][1] + 1)]
-    if target_page is None or target_page == 1:
-        prev_url = None
-    else:
-        prev_url = url_for('book_bp.books_list', page=target_page - 1)
-
-    if target_page == book_page[-1][1]:
-        next_url = None
-    else:
-        next_url = url_for('book_bp.books_list', page=target_page + 1)
-
+    books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list)
 
     return render_template(
         'books_list.html',
@@ -53,3 +36,53 @@ def books_list():
         next=next_url,
         target_page=target_page
     )
+
+
+@book_blueprint.route('/search', methods=['GET', 'POST'])
+def search():
+    form = SearchForm()
+    error = None
+    if form.validate_on_submit():
+        search_content = form.search_content.data
+        select_items = form.select.data
+        books = []
+        if select_items == "Book ID":
+            try:
+                book = repo_instance.get_book(int(search_content))
+                if book is None:
+                    raise KeyError
+                books.append(book)
+            except ValueError:
+                error = "Invalid Input!"
+                return render_template('search.html',
+                                       handler_url=url_for('book_bp.search'),
+                                       error=error,
+                                       form=form)
+            except KeyError:
+                error = "There are no search results!"
+                return render_template('search.html',
+                                       handler_url=url_for('book_bp.search'),
+                                       error=error,
+                                       form=form)
+
+            target_page = request.args.get('page')
+            books, pages, prev_url, next_url, target_page = form_book_list(target_page, books)
+            return render_template(
+                'books_list.html',
+                books=books,
+                pages=pages,
+                prev=prev_url,
+                next=next_url,
+                target_page=target_page
+            )
+
+    return render_template('search.html',
+                           handler_url=url_for('book_bp.search'),
+                           error=error,
+                           form=form)
+
+
+class SearchForm(FlaskForm):
+    select = SelectField('Search mode', choices=["Book Name", "Book ID", "Author", "Release Year"])
+    search_content = SearchField('Search Content')
+    search_submit = SubmitField('')
