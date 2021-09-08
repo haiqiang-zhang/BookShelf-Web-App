@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, url_for, request, redirect
 
 def form_book_list(target_page, books_list):
+    if not books_list or books_list is None:
+        return [], [1], None, None, 1
     book_page = list()
     for index in range(len(books_list)):
         book_page.append((books_list[index], (index // 7) + 1))

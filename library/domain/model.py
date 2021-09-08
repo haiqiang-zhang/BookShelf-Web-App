@@ -277,6 +277,7 @@ class User:
 
         self.__read_books = []
         self.__reviews = []
+        self.__favourite = []
         self.__pages_read = 0
 
     @property
@@ -315,6 +316,14 @@ class User:
             # Review objects are in practice always considered different due to their timestamp.
             self.__reviews.append(review)
 
+    @property
+    def favourite(self):
+        return self.__favourite
+
+    @favourite.setter
+    def favourite(self, book: Book):
+        self.__favourite.append(book)
+
     def __repr__(self):
         return f'<User {self.user_name}>'
 
@@ -328,6 +337,9 @@ class User:
 
     def __hash__(self):
         return hash(self.user_name)
+
+
+
 
 
 class Review:

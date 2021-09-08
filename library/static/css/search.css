@@ -580,7 +580,8 @@ legend {
     background-color: #ffffff;
     background-size: cover;
     background-position: center center;
-    padding: 15px
+    padding: 15px;
+    min-height: 90vh;
 }
 
 .s003 form {
@@ -643,18 +644,7 @@ legend {
     border-right: 1px solid rgba(0, 0, 0, .1)
 }
 
-.s003 form .inner-form .input-field.first-wrap .choices__inner {
-    background: 0 0;
-    border-radius: 0;
-    border: 0;
-    height: 100%;
-    color: #fff;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
-    padding: 10px 30px
-}
+
 
 .s003 form .inner-form .input-field.first-wrap .choices__inner .choices__list.choices__list--single {
     display: -ms-flexbox;

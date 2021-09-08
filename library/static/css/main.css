@@ -350,7 +350,7 @@ input[type='submit']:hover {
     margin-top: 40px;
 }
 
-
+/*Book List*/
 .tm-prev-next-wrapper,
 .tm-paging-wrapper {
     padding-left: 15px;
@@ -384,6 +384,7 @@ input[type='submit']:hover {
     align-items: center;
     justify-content: center;
 }
+
 
 .change_pages{
     display: flex;
@@ -434,5 +435,20 @@ input[type='submit']:hover {
 }
 
 
+/*Search*/
+.s003 form .inner-form .input-field.first-wrap .choices__inner {
+    background: 0 0;
+    border-radius: 0;
+    border: 0;
+    height: 100%;
+    color: #fff;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 10px 20px
+}
 
-
+#select {
+    border: none;
+}

@@ -21,9 +21,11 @@ class MemoryRepository(AbstractRepository):
         self.__tags = list()
         self.__users = list()
         self.__reviews = list()
+        self.__author = list()
 
     def add_user(self, user: User):
         self.__users.append(user)
+
 
     def get_user(self, user_name) -> User:
         return next((user for user in self.__users if user.user_name == user_name), None)
@@ -33,6 +35,12 @@ class MemoryRepository(AbstractRepository):
 
     def get_user_num_of_read_book(self, user:User) -> int:
         return len(user.read_books)
+
+    def get_user_read_book(self, user:User) -> List[Book]:
+        return user.read_books
+
+    def get_favourite(self, user:User):
+        return user.favourite
 
     def add_book(self, book: Book):
         insort_left(self.__books, book)
@@ -74,15 +82,15 @@ class MemoryRepository(AbstractRepository):
         return books
 
     def get_books_by_index(self, index: List[int])-> List[Book]:
-
         return [self.__books[index] for index in index]
 
-    def get_books_by_authors(self, author: Author) -> List[Book]:
+    def get_books_by_authors(self, author_input: str) -> List[Book]:
         matching_articles = list()
         try:
             for book in self.__books:
-                if author in book.authors:
-                    matching_articles.append(book)
+                for author in book.authors:
+                    if author_input in author.full_name:
+                        matching_articles.append(book)
         except ValueError:
             pass
         return matching_articles
@@ -101,7 +109,7 @@ class MemoryRepository(AbstractRepository):
         matching_articles = list()
         try:
             for book in self.__books:
-                if book.title == title:
+                if title in book.title:
                     matching_articles.append(book)
         except ValueError:
             pass
@@ -163,6 +171,8 @@ def load_books_and_author(data_path: Path, repo: MemoryRepository):
     JSONReader.read_json_files()
     for book in JSONReader.dataset_of_books:
         repo.add_book(book)
+
+
 
 
 

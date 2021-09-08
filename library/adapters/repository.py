@@ -49,6 +49,12 @@ class AbstractRepository(abc.ABC):
     def get_user_num_of_read_book(self, user: User) -> int:
         raise NotImplementedError
 
+    def get_user_read_book(self, user:User):
+        raise NotImplementedError
+
+    def get_favourite(self, user:User):
+        raise NotImplementedError
+
     @abc.abstractmethod
     def get_books_by_index(self,index: List[int]) -> List[Book]:
         raise NotImplementedError
@@ -62,7 +68,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_books_by_authors(self, author: Author) -> List[Book]:
+    def get_books_by_authors(self, author: str) -> List[Book]:
         """ Returns a list of Articles that were published on target_date.
 
         If there are no Articles on the given date, this method returns an empty list.
@@ -133,6 +139,7 @@ class AbstractRepository(abc.ABC):
     def get_reviews(self):
         """ Returns the Comments stored in the repository. """
         raise NotImplementedError
+
 
 
 

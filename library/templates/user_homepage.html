@@ -37,8 +37,8 @@
 
 
         <ul class="user_homepage_function_ul">
-            <li><a href="#">Read Books</a></li>
-            <li><a href="#">Favourite Books</a></li>
+            <li><a href="{{ url_for('book_bp.read_book') }}">Read Books</a></li>
+            <li><a href="{{ url_for('book_bp.favourite_book') }}">Favourite Books</a></li>
             <li><a href="#">Add Books</a></li>
             <li><a href="#">Delete Books</a></li>
         </ul>
