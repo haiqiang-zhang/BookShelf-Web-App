@@ -1,0 +1,48 @@
+{% extends "book_desc.html" %}
+
+{% block review %}
+
+
+<main>
+
+    <div style="clear:both">
+
+{#        <div style="float:left">#}
+{#            {% for tag in article.tags %}#}
+{#            <button class="btn-general-disabled" disable>{{ tag.name }}</button>#}
+{#            {% endfor %}#}
+{#        </div>#}
+        <div class="form-wrapper">
+            <form action="{{handler_url}}" method="post">
+                {{form.book_id}} <!-- Need to include this hidden field as it tracks the article being commented. -->
+                {{form.csrf_token}} <!-- Need to include this token - Flask WTForms requires it. -->
+                <br>
+                <h2>Review</h2>
+                <div class="review_rating">
+                    Choose your rating: &nbsp; {{ form.rating }}
+                </div>
+                <br>
+
+
+
+                <div class ="form-field">   {{form.review(size = 100, placeholder="Type your text review", class="textarea", cols="50", rows="6", wrap="hard")}}
+                    {% if form.review.errors %}
+                        <ul class="errors">
+        	            {% for error in form.review.errors %}
+        		            <li>{{error}}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                {{ form.submit }}
+            </form>
+        </div>
+    </div>
+</main>
+
+
+
+
+
+
+{% endblock %}

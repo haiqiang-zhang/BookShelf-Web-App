@@ -1,31 +1,47 @@
-{% extends 'layout.html' %} {% block content %}
-    <h1>All books</h1>
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h1>{{ list_title }}</h1>
     <main class="all_book_main">
         <table width="100%" cellpadding="10">
             {% for book in books %}
                 <tbody>
-                <tr>
-                    <td width="50" valign="top" class="book_list">
+                <tr class="book_list">
+                    <td width="50" valign="top">
                         <a class="nbg" href="{{ book.link }}" title="book.title">
                             <img src="{{ book.image_url }}" width="75" class="">
                         </a>
                     </td>
 
-                    <td valign="top" class="book_list">
+                    <td valign="top">
                         <p class="ul"></p>
                         <div class="pl2">
-                            <a href="{{ book.url }}" class="">
+                            <a href="{{ url_for('book_bp.book_desc', book_id=book.book_id) }}" class="">
                                 <h3>{{ book.title }} </h3>
                             </a>
-                            <p class="pl">{{ book.publication_year }}({{ book.country_code }}) / Book
-                                publisher: {{ book.publisher }}</p>
-                            <div class="star clearfix">
-                                <span class="allstar30"></span>
-                                <span class="rating">Average rating: {{ book. average_rating }}</span>
-                                <span class="desc">Description: {{ book.description }}</span>
-                            </div>
+                            <p>Release year: {{ book.release_year }}</p>
+                            <p>Publisher: {{ book.publisher.name }}</p>
+                            <p> Authors:
+                                {% for author in book.authors %}
+                                    {{ author.full_name }},
+                                {% endfor %}
+                            </p>
+                        </div>
                         </div>
                     </td>
+
+                    {% if list_title == "All Books" %}
+
+                        <td>
+                            <div class="add_buttom">
+                                <a href="{{ url_for('book_bp.read_a_book', read_book_id=book.book_id) }}"> Read the
+                                    Book </a>
+                                <a href="#"> Add to Favourite </a>
+                            </div>
+                        </td>
+
+                    {% endif %}
+
 
                 </tr>
                 </tbody>

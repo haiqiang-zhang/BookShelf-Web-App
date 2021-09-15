@@ -22,12 +22,7 @@ def create_some_book():
     some_book.release_year = 1999
     return some_book
 
-
-
 data_path = Path('library') / 'adapters' / 'data'
-
-
-
 
 
 def create_app(test_config = None):
@@ -50,8 +45,6 @@ def create_app(test_config = None):
     memory_repository.populate(data_path, repo.repo_instance)
 
 
-
-
     with app.app_context():
         # Register blueprints.
         from .home import home
@@ -62,6 +55,9 @@ def create_app(test_config = None):
 
         from .book_blueprint import book
         app.register_blueprint(book.book_blueprint)
+
+        from .search_blueprint import search
+        app.register_blueprint(search.search_blueprint)
 
 
     return app

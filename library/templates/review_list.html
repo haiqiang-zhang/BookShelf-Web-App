@@ -1,0 +1,25 @@
+<main>
+
+<div class="review-list-container">
+
+    {% for review in reviews %}
+
+
+        <div class="review-list">
+            <h3>User Name: {{ review.user.user_name }}</h3>
+            <p>Rating: {{ review.rating }} </p>
+            <p>Time: {{ review.timestamp }}</p>
+            <p>{{ review.review_text }} </p>
+        </div>
+
+
+    {% endfor %}
+
+
+</div>
+
+
+
+
+</main>
+

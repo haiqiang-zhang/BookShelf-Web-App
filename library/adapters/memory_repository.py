@@ -116,7 +116,7 @@ class MemoryRepository(AbstractRepository):
         return matching_articles
 
     def get_books_ids_for_tag(self, tag_name: str):
-        # Linear search, to find the first occurrence of a Tag with the name tag_name.
+        # Linear search_blueprint, to find the first occurrence of a Tag with the name tag_name.
         tag = next((tag for tag in self.__tags if tag.tag_name == tag_name), None)
 
         # Retrieve the ids of articles associated with the Tag.

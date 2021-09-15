@@ -333,8 +333,9 @@ input[type='submit'] {
 }
 
 input[type='submit']:hover {
-    background-color: #8acd32;
-    color: black;
+    background-color: #371b65;
+    transition: all 0.3s ease;
+    color: white;
 }
 
 .icon {
@@ -351,6 +352,15 @@ input[type='submit']:hover {
 }
 
 /*Book List*/
+
+.book_list {
+    border: dotted;
+    border-width: 0px 0px 3px 0px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+
 .tm-prev-next-wrapper,
 .tm-paging-wrapper {
     padding-left: 15px;
@@ -434,6 +444,40 @@ input[type='submit']:hover {
     margin-right: 20px;
 }
 
+.add_buttom {
+    padding-left: 15px;
+    margin-right: 200px;
+    display: flex;
+}
+
+
+.add_buttom a{
+    background-color: #7532cd;
+    color: white;
+    padding: 8px 35px;
+    border: none;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-bottom: .5rem !important;
+    margin-right: 20px;
+    width: 200px;
+}
+
+.add_buttom a:hover{
+    background-color: #371b65;
+    color: white;
+    padding: 8px 35px;
+    border: none;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-bottom: .5rem !important;
+    margin-right: 20px;
+}
 
 /*Search*/
 .s003 form .inner-form .input-field.first-wrap .choices__inner {
@@ -451,4 +495,52 @@ input[type='submit']:hover {
 
 #select {
     border: none;
+}
+
+
+/*Book Desc*/
+
+.book_desc{
+    margin: 40px;
+}
+
+.book_desc_top {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-around;
+
+}
+
+.book_desc_top img{
+    width: 250px;
+
+}
+
+
+/*review*/
+
+.review_rating {
+    display: flex;
+    align-items: center;
+
+}
+
+.review_rating select{
+    width: 100px;
+}
+
+.review-list {
+    border: dotted;
+    border-width: 0px 0px 3px 0px;
+    margin-right: 20px;
+    margin-top: 20px;
+
+
+}
+
+.review-list-container{
+    display: flex;
+    margin-top: 20px;
+    flex-wrap: wrap;
+
 }

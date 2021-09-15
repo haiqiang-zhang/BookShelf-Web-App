@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<main class="book_desc">
+    <div class="book_desc_top">
+        <div>
+            <img src="{{ book.image_url }}" width="100" class="">
+        </div>
+
+        <div>
+            <p>Release year: {{ book.release_year }}</p>
+            <p>Publisher: {{ book.publisher.name }}</p>
+            <p> Authors:
+                {% for author in book.authors %}
+                    {{ author.full_name }},
+                {% endfor %}
+            </p>
+            <div class="add_buttom">
+                <a href="{{ url_for('book_bp.read_a_book', read_book_id=book.book_id) }}"> Read the
+                    Book </a>
+                <a href="#"> Add to Favourite </a>
+                <a href="{{ url_for('book_bp.review', book_id=book.book_id) }}"> Review </a>
+            </div>
+            <div id="container">
+            <!-- Main content block to be supplied by page. -->
+            {% block review %} {% endblock %}
+        </div>
+        </div>
+
+    </div>
+
+    <div>
+        <h2>Description</h2>
+        <p>{{ book.description }}</p>
+    </div>
+
+<br>
+    <div>
+        <h2>Review</h2>
+        {% include 'review_list.html' %}
+
+    </div>
+
+
+
+
+
+</main>
+
+
+
+
+
+
+
+
+
+{% endblock %}
