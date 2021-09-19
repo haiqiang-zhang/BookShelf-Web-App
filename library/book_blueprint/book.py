@@ -75,7 +75,7 @@ def favourite_book():
 def read_a_book():
     read_book_id = request.args.get("read_book_id")
     user_name = session["user_name"]
-    book_instance, user_instance = read_a_book(repo_instance, user_name, read_book_id)
+    book_instance, user_instance = services.read_a_book_services(repo_instance, user_name, read_book_id)
     if book_instance not in user_instance.read_books:
         user_instance.read_a_book(book_instance)
         return "Succeed!"

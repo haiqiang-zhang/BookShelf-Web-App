@@ -66,17 +66,51 @@
                 <nav class="tm-paging-nav d-inline-block">
                     <ul>
                         {% for index in pages %}
-                            {% if target_page == index %}
-                                <li class="tm-paging-item active">
-                                    <a href="{{ url_for('book_bp.books_list', page=index) }}"
-                                       class="page_index_a tm-paging-link">{{ index }}</a>
-                                </li>
-                            {% else %}
-                                <li class="tm-paging-item">
-                                    <a href="{{ url_for('book_bp.books_list', page=index) }}"
-                                       class="page_index_a tm-paging-link">{{ index }}</a>
-                                </li>
+                            {% if list_title == "Read Books" %}
+                                {% if target_page == index %}
+                                    <li class="tm-paging-item active">
+                                        <a href="{{ url_for('book_bp.read_book', page=index) }}"
+                                           class="page_index_a tm-paging-link">{{ index }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="tm-paging-item">
+                                        <a href="{{ url_for('book_bp.read_book', page=index) }}"
+                                           class="page_index_a tm-paging-link">{{ index }}</a>
+                                    </li>
+                                {% endif %}
+
                             {% endif %}
+
+                            {% if list_title == "All Books" %}
+                                {% if target_page == index %}
+                                    <li class="tm-paging-item active">
+                                        <a href="{{ url_for('book_bp.books_list', page=index) }}"
+                                           class="page_index_a tm-paging-link">{{ index }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="tm-paging-item">
+                                        <a href="{{ url_for('book_bp.books_list', page=index) }}"
+                                           class="page_index_a tm-paging-link">{{ index }}</a>
+                                    </li>
+                                {% endif %}
+
+                            {% endif %}
+
+                            {% if list_title == "Favourite Books" %}
+                                {% if target_page == index %}
+                                    <li class="tm-paging-item active">
+                                        <a href="{{ url_for('book_bp.favourite_book', page=index) }}"
+                                           class="page_index_a tm-paging-link">{{ index }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="tm-paging-item">
+                                        <a href="{{ url_for('book_bp.favourite_book', page=index) }}"
+                                           class="page_index_a tm-paging-link">{{ index }}</a>
+                                    </li>
+                                {% endif %}
+
+                            {% endif %}
+
                         {% endfor %}
                     </ul>
                 </nav>

@@ -1,6 +1,6 @@
 """Initialize Flask app."""
 from pathlib import Path
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 
 import library.adapters.repository as repo
 from library.adapters.memory_repository import MemoryRepository
@@ -26,10 +26,13 @@ data_path = Path('library') / 'adapters' / 'data'
 
 
 def create_app(test_config = None):
+
     """Construct the core application."""
 
     # Create the Flask app object.
     app = Flask(__name__)
+
+
 
     # Configure the app from configuration-file settings.
     app.config.from_object('config.Config')
@@ -58,6 +61,8 @@ def create_app(test_config = None):
 
         from .search_blueprint import search
         app.register_blueprint(search.search_blueprint)
+
+
 
 
     return app
