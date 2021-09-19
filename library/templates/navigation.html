@@ -15,6 +15,7 @@
     {% if 'user_name' in session %}
         <a class="btn-nav" href="{{ url_for('home_bp.user_homepage') }}">User Homepage</a>
         <a class="btn-nav" href="{{ url_for('book_bp.read_book') }}">Read Books</a>
+        <a class="btn-nav" href="{{ url_for('book_bp.favourite_book') }}">Favourite Books</a>
         <a class="btn-nav" href="{{ url_for('authentication_bp.logout') }}">Logout</a>
 
     {% endif %}

@@ -10,7 +10,7 @@ def get_search_books(request_search_scope:str, repo_instance:AbstractRepository)
         scope_text = "All Books"
     elif "/read_book" in request_search_scope:
         user_name = session["user_name"]
-        list_book = repo_instance.get_user(user_name).read_books
+        list_book = repo_instance.get_user_read_book(repo_instance.get_user(user_name))
         scope_text = "Read Books"
     elif "/favourite_book" in request_search_scope:
         user_name = session["user_name"]
@@ -44,20 +44,20 @@ def search_book(repo_instance:AbstractRepository, select_items, search_content, 
 
     else:
         if select_items == "Book ID":
-            book = get_book_by_id_and_given_list(list_book, int(select_items))
+            book = get_book_by_id_and_given_list(list_book, int(search_content))
             if book is None:
                 raise KeyError
             books.append(book)
         elif select_items == "Book Name":
-            books = get_books_by_title_and_given_list(list_book, select_items)
+            books = get_books_by_title_and_given_list(list_book, search_content)
             if not books:
                 raise KeyError
         elif select_items == "Author":
-            books = get_books_by_author_and_given_list(list_book, select_items)
+            books = get_books_by_author_and_given_list(list_book, search_content)
             if not books:
                 raise KeyError
         else:
-            books = get_books_by_year_and_given_list(list_book,int(select_items))
+            books = get_books_by_year_and_given_list(list_book, int(search_content))
             if not books:
                 raise KeyError
     return books

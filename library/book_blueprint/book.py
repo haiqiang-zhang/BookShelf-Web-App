@@ -22,7 +22,7 @@ def books_list():
     session['search_field'] = "All Books"
     books_list = repo_instance.get_all_books()
     target_page = request.args.get('page')
-    books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list)
+    books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "All Books")
     return render_template(
         'books_list.html',
         list_title="All Books",
@@ -40,7 +40,7 @@ def read_book():
         user = repo_instance.get_user(session['user_name'])
         books_list = repo_instance.get_user_read_book(user)
         target_page = request.args.get('page')
-        books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list)
+        books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "Read Books")
         return render_template(
             'books_list.html',
             list_title="Read Books",
@@ -58,7 +58,7 @@ def favourite_book():
         user = repo_instance.get_user(session['user_name'])
         books_list = repo_instance.get_favourite(user)
         target_page = request.args.get('page')
-        books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list)
+        books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "Favourite Books")
         return render_template(
             'books_list.html',
             list_title="Favourite Books",
@@ -81,6 +81,19 @@ def read_a_book():
         return "Succeed!"
     else:
         return "You have read this book!"
+
+
+@book_blueprint.route('/favourite_a_book')
+@login_required
+def favourite_a_book():
+    fav_book_id = request.args.get("fav_book_id")
+    user_name = session["user_name"]
+    book_instance, user_instance = services.read_a_book_services(repo_instance, user_name, fav_book_id)
+    if book_instance not in user_instance.read_books:
+        user_instance.favourite.append(book_instance)
+        return "Succeed!"
+    else:
+        return "This book is already your favourite！"
 
 
 

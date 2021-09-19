@@ -3,21 +3,29 @@
         <h1>Recommendation</h1>
         <br/>
         <table>
-        <tbody>
-        <tr>
-            <td width="300" valign="top">
-                <a class="nbg" title="book.title">
-                    <img src="{{ image_url }}"  class="rec_img">
-                </a>
-            </td>
+            <tbody>
+            <tr>
+                <td width="300" valign="top">
+                    <a class="nbg" title="book.title">
+                        <img src="{{ image_url }}" class="rec_img">
+                    </a>
+                </td>
 
-            <td valign="top">
-                <h3>{{ bookName }}</h3>
-                <p>Release year: {{ releaseYear }}</p>
-                <p>Description: {{ Desc }}</p>
-            </td>
-        </tr>
-        </tbody>
+                <td valign="top">
+                    <h3>{{ bookName }}</h3>
+                    <p>Release year: {{ releaseYear }}</p>
+                    <p>Description: {{ Desc }}</p>
+
+                    <div class="add_buttom">
+                        <a href="{{ url_for('book_bp.read_a_book', read_book_id=book_id) }}"> Read the
+                            Book </a>
+                        <a href="{{ url_for('book_bp.favourite_a_book', fav_book_id=book_id) }}"> Add to Favourite </a>
+                    </div>
+
+                </td>
+            </tr>
+            </tbody>
         </table>
+
     </main>
 {% endblock %}

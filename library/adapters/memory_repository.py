@@ -223,33 +223,33 @@ def get_book_by_id_and_given_list(list_book:List[Book], id:int):
 
 
 def get_books_by_title_and_given_list(list_book:List[Book], title:str):
-    matching_articles = list()
+    matching_books = list()
     try:
         for book in list_book:
             if title in book.title:
-                matching_articles.append(book)
+                matching_books.append(book)
     except ValueError:
         pass
-    return matching_articles
+    return matching_books
 
 def get_books_by_author_and_given_list(list_book:List[Book], author_input:str):
-    matching_articles = list()
+    matching_books = list()
     try:
         for book in list_book:
             for author in book.authors:
                 if author_input in author.full_name:
-                    matching_articles.append(book)
+                    matching_books.append(book)
     except ValueError:
         pass
-    return matching_articles
+    return matching_books
 
 
 def get_books_by_year_and_given_list(list_book:List[Book], release_year:int):
-    matching_articles = list()
+    matching_books = list()
     try:
         for book in list_book:
             if book.release_year == release_year:
-                matching_articles.append(book)
+                matching_books.append(book)
     except ValueError:
         pass
-    return matching_articles
+    return matching_books

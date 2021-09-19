@@ -15,7 +15,8 @@ def home():
                            image_url=some_book[0].image_url,
                            bookName=some_book[0].title,
                            releaseYear=some_book[0].release_year,
-                           Desc=some_book[0].description)
+                           Desc=some_book[0].description,
+                           book_id=some_book[0].book_id)
 
 
 @home_blueprint.route('/user_homepage', methods=['GET'])

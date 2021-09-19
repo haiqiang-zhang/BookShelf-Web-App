@@ -11,7 +11,7 @@ class UnknownUserException(Exception):
     pass
 
 
-def form_book_list(target_page, books_list):
+def form_book_list(target_page, books_list, list_title):
     if not books_list or books_list is None:
         return [], [1], None, None, 1
     book_page = list()
@@ -29,17 +29,30 @@ def form_book_list(target_page, books_list):
     if target_page is None or target_page == 1:
         prev_url = None
     else:
-        prev_url = url_for('book_bp.books_list', page=target_page - 1)
+        if list_title == "All Books": prev_url = url_for('book_bp.books_list', page=target_page - 1)
+        elif list_title == "Read Books": prev_url = url_for('book_bp.read_book', page=target_page - 1)
+        elif list_title == "Favourite Books": prev_url = url_for('book_bp.favourite_book', page=target_page - 1)
+        elif list_title == "Search Result": prev_url = url_for('search_bp.search_result', page=target_page - 1)
 
     if target_page == book_page[-1][1]:
         next_url = None
     else:
-        next_url = url_for('book_bp.books_list', page=target_page + 1)
+        if list_title == "All Books": next_url = url_for('book_bp.books_list', page=target_page + 1)
+        elif list_title == "Read Books": next_url = url_for('book_bp.read_book', page=target_page + 1)
+        elif list_title == "Favourite Books": next_url = url_for('book_bp.favourite_book', page=target_page + 1)
+        elif list_title == "Search Result": next_url = url_for('search_bp.search_result', page=target_page + 1)
+
     return books, pages, prev_url, next_url, target_page
 
 
 def read_a_book_services(repo_instance, user_name, read_book_id):
     book_instance = repo_instance.get_book(int(read_book_id))
+    user_instance = repo_instance.get_user(user_name)
+    return book_instance, user_instance
+
+
+def fav_a_book_services(repo_instance, user_name, fav_book_id):
+    book_instance = repo_instance.get_book(int(fav_book_id))
     user_instance = repo_instance.get_user(user_name)
     return book_instance, user_instance
 
