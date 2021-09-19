@@ -68,6 +68,10 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_all_books(self) -> List[Book]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_books_by_authors(self, author: str) -> List[Book]:
         """ Returns a list of Articles that were published on target_date.
 

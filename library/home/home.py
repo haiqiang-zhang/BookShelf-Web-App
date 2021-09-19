@@ -32,7 +32,6 @@ def user_homepage():
             if len(user_temp.read_books) < number_book:
                 number_read_lower_than_me += 1
         percentage = number_read_lower_than_me/len(repo_instance.get_all_user()) *100
-
         return render_template('user_homepage.html',
                                percentage=percentage,
                                book=number_book,

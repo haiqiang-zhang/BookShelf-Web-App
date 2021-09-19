@@ -56,7 +56,6 @@ class MemoryRepository(AbstractRepository):
 
         return book
 
-
     def get_all_books(self) -> List[Book]:
         return self.__books
 
@@ -175,45 +174,6 @@ def load_books_and_author(data_path: Path, repo: MemoryRepository):
 
 
 
-
-    # tags = dict()
-    #
-    # articles_filename = str(data_path / "news_articles.csv")
-    # for data_row in read_csv_file(articles_filename):
-    #
-    #     article_key = int(data_row[0])
-    #     number_of_tags = len(data_row) - 6
-    #     article_tags = data_row[-number_of_tags:]
-    #
-    #     # Add any new tags; associate the current article with tags.
-    #     for tag in article_tags:
-    #         if tag not in tags.keys():
-    #             tags[tag] = list()
-    #         tags[tag].append(article_key)
-    #     del data_row[-number_of_tags:]
-    #
-    #     # Create Article object.
-    #     article = Article(
-    #         date=date.fromisoformat(data_row[1]),
-    #         title=data_row[2],
-    #         first_paragraph=data_row[3],
-    #         hyperlink=data_row[4],
-    #         image_hyperlink=data_row[5],
-    #         id=article_key
-    #     )
-    #
-    #     # Add the Article to the repository.
-    #     repo.add_article(article)
-    #
-    # # Create Tag objects, associate them with Articles and add them to the repository.
-    # for tag_name in tags.keys():
-    #     tag = Tag(tag_name)
-    #     for article_id in tags[tag_name]:
-    #         article = repo.get_article(article_id)
-    #         make_tag_association(article, tag)
-    #     repo.add_tag(tag)
-
-
 def load_users(data_path: Path, repo: MemoryRepository):
     users = dict()
 
@@ -253,3 +213,43 @@ def populate(data_path: Path, repo: MemoryRepository):
 
     # Load comments into the repository.
     load_reviews(data_path, repo, users)
+
+
+def get_book_by_id_and_given_list(list_book:List[Book], id:int):
+    for book in list_book:
+        if book.book_id == id:
+            return book
+    return None
+
+
+def get_books_by_title_and_given_list(list_book:List[Book], title:str):
+    matching_articles = list()
+    try:
+        for book in list_book:
+            if title in book.title:
+                matching_articles.append(book)
+    except ValueError:
+        pass
+    return matching_articles
+
+def get_books_by_author_and_given_list(list_book:List[Book], author_input:str):
+    matching_articles = list()
+    try:
+        for book in list_book:
+            for author in book.authors:
+                if author_input in author.full_name:
+                    matching_articles.append(book)
+    except ValueError:
+        pass
+    return matching_articles
+
+
+def get_books_by_year_and_given_list(list_book:List[Book], release_year:int):
+    matching_articles = list()
+    try:
+        for book in list_book:
+            if book.release_year == release_year:
+                matching_articles.append(book)
+    except ValueError:
+        pass
+    return matching_articles

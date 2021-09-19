@@ -8,6 +8,7 @@ from library.adapters.repository import AbstractRepository
 from library.adapters.repository import repo_instance
 from library.authentication.authentication import login_required
 from library.book_blueprint.services import form_book_list
+from library.search_blueprint.services import get_search_books, search_book
 
 
 
@@ -20,41 +21,27 @@ search_blueprint = Blueprint(
 def search():
     form = SearchForm()
     error = None
+    search_scope, scope_text = get_search_books(request.referrer,repo_instance)
     if form.validate_on_submit():
         search_content = form.search_content.data
         select_items = form.select.data
         books = []
         try:
-            if select_items == "Book ID":
-                book = repo_instance.get_book(int(search_content))
-                if book is None:
-                    raise KeyError
-                books.append(book)
-            elif select_items == "Book Name":
-                books = repo_instance.get_books_by_title(search_content)
-                if not books:
-                    raise KeyError
-            elif select_items == "Author":
-                books = repo_instance.get_books_by_authors(search_content)
-                if not books:
-                    raise KeyError
-            else:
-                books = repo_instance.get_books_by_release_year(int(search_content))
-                if not books:
-                    raise KeyError
+            search_book(repo_instance,select_items,search_content,search_scope)
         except ValueError:
             error = "Invalid Input!"
-            return render_template('search.html', handler_url=url_for('search_bp.search'), error=error, form=form)
+            return render_template('search.html', handler_url=url_for('search_bp.search'), error=error, form=form,scope_text=scope_text)
         except KeyError:
             error = "There are no search results!"
-            return render_template('search.html', handler_url=url_for('search_bp.search'), error=error, form=form)
+            return render_template('search.html', handler_url=url_for('search_bp.search'), error=error, form=form,scope_text=scope_text)
         target_page = request.args.get('page')
         books, pages, prev_url, next_url, target_page = form_book_list(target_page, books)
         return render_template('books_list.html', books=books, pages=pages, prev=prev_url, next=next_url, target_page=target_page)
     return render_template('search.html',
                            handler_url=url_for('search_bp.search'),
                            error=error,
-                           form=form)
+                           form=form,
+                           scope_text=scope_text)
 
 
 class SearchForm(FlaskForm):

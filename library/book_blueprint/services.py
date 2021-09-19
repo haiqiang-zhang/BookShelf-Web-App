@@ -38,23 +38,20 @@ def form_book_list(target_page, books_list):
     return books, pages, prev_url, next_url, target_page
 
 
-
+def read_a_book(repo_instance, user_name, read_book_id):
+    book_instance = repo_instance.get_book(int(read_book_id))
+    user_instance = repo_instance.get_user(user_name)
+    return book_instance, user_instance
 
 
 
 def add_review(book_id: int, review_text: str, user_name: str,rating , repo: AbstractRepository):
-    # Check that the article exists.
     book = repo.get_book(book_id)
     if book is None:
         raise NonExistentArticleException
-
     user = repo.get_user(user_name)
     if user is None:
         raise UnknownUserException
-
-    # Create comment.
     review = make_review(review_text, user, book, rating)
-
-    # Update the repository.
     repo.add_review(review)
 

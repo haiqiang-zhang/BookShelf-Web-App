@@ -23,7 +23,6 @@ def books_list():
     books_list = repo_instance.get_all_books()
     target_page = request.args.get('page')
     books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list)
-
     return render_template(
         'books_list.html',
         list_title="All Books",
@@ -76,8 +75,7 @@ def favourite_book():
 def read_a_book():
     read_book_id = request.args.get("read_book_id")
     user_name = session["user_name"]
-    book_instance = repo_instance.get_book(int(read_book_id))
-    user_instance = repo_instance.get_user(user_name)
+    book_instance, user_instance = read_a_book(repo_instance, user_name, read_book_id)
     if book_instance not in user_instance.read_books:
         user_instance.read_a_book(book_instance)
         return "Succeed!"
@@ -101,28 +99,18 @@ def book_desc():
 @book_blueprint.route('/review', methods=['GET', 'POST'])
 @login_required
 def review():
-
     user_name = session['user_name']
     form = ReviewForm()
-
     if form.validate_on_submit():
         book_id = int(form.book_id.data)
         services.add_review(book_id, form.review.data, user_name,int(form.rating.data), repo_instance)
         book = repo_instance.get_book(book_id)
         return redirect(url_for('book_bp.book_desc', book_id=book_id))
-
     if request.method == 'GET':
         book_id = int(request.args.get('book_id'))
-
-        # Store the article id in the form.
         form.book_id.data = book_id
     else:
-        # Request is a HTTP POST where form validation has failed.
-        # Extract the article id of the article being commented from the form.
         book_id = int(form.book_id.data)
-
-    # For a GET or an unsuccessful POST, retrieve the article to comment in dict form, and return a Web page that allows
-    # the user to enter a comment. The generated Web page includes a form object.
     book = repo_instance.get_book(book_id)
     return render_template(
         'Review.html',
@@ -149,7 +137,6 @@ class ReviewForm(FlaskForm):
         Length(min=4, message='Your comment is too short'),
         ProfanityFree(message='Your comment must not contain profanity')])
     rating = SelectField('rating', choices=["1", "2", "3", "4", "5"])
-
     book_id = HiddenField("book id")
     submit = SubmitField('Submit')
 

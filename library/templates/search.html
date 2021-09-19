@@ -1,9 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
 
-    <div class="s003">
+    <div class="s003" style="flex-direction: column">
+
         <form action="{{ handler_url }}" method="post">
-        {{ form.csrf_token }}
+            {{ form.csrf_token }}
             <div class="inner-form">
                 <div class="input-field first-wrap">
                     <div class="input-select">
@@ -12,27 +13,27 @@
                              aria-activedescendant="choices-choices-single-defaul-a0-item-choice-7">
                             <div class="choices__inner is-hidden">
                                 {{ form.select }}
-{#                                <select data-trigger="" name="choices-single-defaul"#}
-{#                                        class="choices__input is-hidden" tabindex="-1"#}
-{#                                        aria-hidden="true"#}
-{#                                        data-choice="active">#}
-{#                                    {% for mode in search_modes %}#}
-{#                                    <option value="{{ mode }}">{{ mode }}</option>#}
-{#                                    {% endfor %}#}
-{#                                </select>#}
+                                {#                                <select data-trigger="" name="choices-single-defaul"#}
+                                {#                                        class="choices__input is-hidden" tabindex="-1"#}
+                                {#                                        aria-hidden="true"#}
+                                {#                                        data-choice="active">#}
+                                {#                                    {% for mode in search_modes %}#}
+                                {#                                    <option value="{{ mode }}">{{ mode }}</option>#}
+                                {#                                    {% endfor %}#}
+                                {#                                </select>#}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="input-field second-wrap">
-{#                    <input id="search_blueprint" type="text" placeholder="Enter Keywords?">#}
+                    {#                    <input id="search_blueprint" type="text" placeholder="Enter Keywords?">#}
                     {{ form.search_content(placeholder="Enter Keywords") }}
                 </div>
                 <div class="input-field third-wrap">
 
                     <button class="btn-search" type="button">
 
-{#                        Extra Free SVG Picture#}
+                        {#                        Extra Free SVG Picture#}
                         <svg class="svg-inline--fa fa-search fa-w-16" aria-hidden="true" data-prefix="fas"
                              data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                             <path fill="currentColor"
@@ -43,9 +44,12 @@
                 </div>
             </div>
             {% if error is not none %}
-    <p>{{ error }}</p>
-    {% endif %}
+                <p>{{ error }}</p>
+            {% endif %}
         </form>
+        <div style="margin-top: 30px">
+            Search in: {{ scope_text }}
+        </div>
 
     </div>
 
