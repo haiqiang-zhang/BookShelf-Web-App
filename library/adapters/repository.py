@@ -2,6 +2,7 @@ import abc
 from typing import List
 from datetime import date
 
+
 from library.domain.model import Publisher, Author, Book, Review, User, BooksInventory, Tag
 
 
@@ -128,6 +129,10 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_tag_by_name(self, name: str):
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def add_review(self, review: Review):
         """ Adds a Comment to the repository.
 
@@ -143,6 +148,8 @@ class AbstractRepository(abc.ABC):
     def get_reviews(self):
         """ Returns the Comments stored in the repository. """
         raise NotImplementedError
+
+
 
 
 

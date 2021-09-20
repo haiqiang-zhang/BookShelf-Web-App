@@ -36,8 +36,6 @@ class Publisher:
         return hash(self.name)
 
 
-
-
 class Author:
 
     def __init__(self, author_id: int, author_full_name: str):
@@ -118,8 +116,10 @@ class Book:
         self.__ebook = None
         self.__num_pages = None
         self.__reviews: List['Review'] = list()
-        self.__tags: List[Tag] = list()
+        self.__tags = list()
         self.__image_url = ""
+        self.__rating = 0
+        self.__rating_count = 0
 
 
     @property
@@ -146,8 +146,18 @@ class Book:
             raise ValueError
 
     @property
+    def update_rating(self, rating):
+        self.__rating_count += 1
+        self.__rating += rating
+
+    @property
+    def get_average_rating(self):
+        return round(self.__rating / self.__rating_count)
+
+    @property
     def release_year(self) -> int:
         return self.__release_year
+
 
     @release_year.setter
     def release_year(self, release_year: int):
@@ -163,6 +173,7 @@ class Book:
     @image_url.setter
     def image_url(self, url: str):
         self.__image_url = url
+
 
     @property
     def description(self) -> str:
@@ -231,8 +242,12 @@ class Book:
         return len(self.__tags)
 
     @property
-    def tags(self) -> Iterable['Tag']:
-        return iter(self.__tags)
+    def tags(self):
+        return self.__tags
+
+    @tags.setter
+    def tags(self, tag):
+        self.__tags.append(tag)
 
     def is_tagged_by(self, tag: 'Tag'):
         return tag in self.__tags
@@ -243,8 +258,12 @@ class Book:
     def add_review(self, review: 'Review'):
         self.__reviews.append(review)
 
-    def add_tag(self, tag: 'Tag'):
-        self.__tags.append(tag)
+    @property
+    def get_average_rating(self) -> float:
+        if self.__rating_count == 0:
+            return 0
+        return round(self.__rating / self.__rating_count)
+
 
     def __repr__(self):
         return f'<Book {self.title}, book id = {self.book_id}>'
@@ -279,6 +298,16 @@ class User:
         self.__reviews = []
         self.__favourite = []
         self.__pages_read = 0
+        self.__tags = []
+
+    @property
+    def tags(self) -> List['Tag']:
+        return self.__tags
+
+    @tags.setter
+    def tags(self, tags):
+        self.__tags.append(tags)
+
 
     @property
     def user_name(self) -> str:
@@ -381,7 +410,7 @@ class Review:
         return self.__review_text
 
     @property
-    def rating(self) -> int:
+    def get_rating(self) -> int:
         return self.__rating
 
     @property
@@ -445,14 +474,22 @@ class Tag:
     def __init__(self, tag_name: str):
         self.__tag_name: str = tag_name
         self.__tagged_books: List[Book] = list()
+        self.__size = 0
+
+    @property
+    def size(self):
+        return self.__size
+
+    def update_size(self):
+        self.__size += 1
 
     @property
     def tag_name(self) -> str:
         return self.__tag_name
 
     @property
-    def tagged_books(self) -> Iterable[Book]:
-        return iter(self.__tagged_books)
+    def tagged_books(self) -> List[Book]:
+        return self.__tagged_books
 
     @property
     def number_of_tagged_articles(self) -> int:
@@ -461,7 +498,7 @@ class Tag:
     def is_applied_to(self, book: Book) -> bool:
         return book in self.__tagged_books
 
-    def add_article(self, book: Book):
+    def add_book(self, book: Book):
         self.__tagged_books.append(book)
 
     def __eq__(self, other):

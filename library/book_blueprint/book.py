@@ -5,6 +5,7 @@ from wtforms import IntegerField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError
 from library.adapters.repository import AbstractRepository
 from library.adapters.repository import repo_instance
+from library.test_blueprint import test
 
 from library.authentication.authentication import login_required
 from library.book_blueprint.services import form_book_list
@@ -22,16 +23,51 @@ def books_list():
     session['search_field'] = "All Books"
     books_list = repo_instance.get_all_books()
     target_page = request.args.get('page')
-    books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "All Books")
+    books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "book_bp.books_list")
+    tags = repo_instance.get_tags()
+
     return render_template(
         'books_list.html',
         list_title="All Books",
+        tags=tags,
         books=books,
         pages=pages,
         prev=prev_url,
         next=next_url,
-        target_page=target_page
+        target_page=target_page,
+        url="book_bp.books_list"
     )
+
+
+@book_blueprint.route('/book_type_list')
+def book_type_list():
+    session['search_field'] = "All Books"
+    books_list = []
+    books_list_size = 0
+    tag_str = request.args.get('tag')
+    for tag in repo_instance.get_tags():
+        if tag.tag_name == tag_str:
+            books_list = tag.tagged_books
+            books_list_size = tag.size
+            break
+    tags = repo_instance.get_tags()
+    total_books = "(Total is " + str(books_list_size) + " books)"
+    target_page = request.args.get('page')
+    books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "book_bp.book_type_list", tag_str)
+
+    return render_template(
+        'books_list.html',
+        list_title=tag_str + " Books",
+        total_books=total_books,
+        tags=tags,
+        books=books,
+        pages=pages,
+        prev=prev_url,
+        next=next_url,
+        target_page=target_page,
+        tag=tag_str,
+        url="book_bp.book_type_list")
+
 
 @book_blueprint.route('/read_book')
 @login_required
@@ -40,7 +76,7 @@ def read_book():
         user = repo_instance.get_user(session['user_name'])
         books_list = repo_instance.get_user_read_book(user)
         target_page = request.args.get('page')
-        books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "Read Books")
+        books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "book_bp.read_book")
         return render_template(
             'books_list.html',
             list_title="Read Books",
@@ -48,8 +84,9 @@ def read_book():
             pages=pages,
             prev=prev_url,
             next=next_url,
-            target_page=target_page
-        )
+            target_page=target_page,
+            url="book_bp.read_book")
+
 
 @book_blueprint.route('/favourite_book')
 @login_required
@@ -58,7 +95,7 @@ def favourite_book():
         user = repo_instance.get_user(session['user_name'])
         books_list = repo_instance.get_favourite(user)
         target_page = request.args.get('page')
-        books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "Favourite Books")
+        books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "book_bp.favourite_book")
         return render_template(
             'books_list.html',
             list_title="Favourite Books",
@@ -66,21 +103,45 @@ def favourite_book():
             pages=pages,
             prev=prev_url,
             next=next_url,
-            target_page=target_page
-        )
+            target_page=target_page,
+            url="book_bp.favourite_book")
 
 
 @book_blueprint.route('/read_a_book')
 @login_required
 def read_a_book():
+    test.get_test_content(request.referrer)
     read_book_id = request.args.get("read_book_id")
     user_name = session["user_name"]
+
+    #session['search_field'] = "All Books"
+    #books_list = repo_instance.get_all_books()
+    #target_page = request.args.get('page')
+    #books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "book_bp.books_list")
+
     book_instance, user_instance = services.read_a_book_services(repo_instance, user_name, read_book_id)
+    #tags = repo_instance.get_tags()
     if book_instance not in user_instance.read_books:
         user_instance.read_a_book(book_instance)
-        return "Succeed!"
+        message="Succeed!"
     else:
-        return "You have read this book!"
+        message="You have read this book!"
+    return message
+
+    # if "books_list" not in request.referrer and "book_type_list" not in request.referrer:
+    #     return redirect(url_for('home_bp.home', message=message, book_id=read_book_id))
+    # else:
+    #     return render_template(
+    #         'books_list.html',
+    #         message=message,
+    #         list_title="All Books",
+    #         tags=tags,
+    #         books=books,
+    #         pages=pages,
+    #         prev=prev_url,
+    #         next=next_url,
+    #         target_page=target_page,
+    #         url="book_bp.books_list")
 
 
 @book_blueprint.route('/favourite_a_book')
@@ -88,12 +149,35 @@ def read_a_book():
 def favourite_a_book():
     fav_book_id = request.args.get("fav_book_id")
     user_name = session["user_name"]
+
+    session['search_field'] = "All Books"
+    #books_list = repo_instance.get_all_books()
+    #target_page = request.args.get('page')
+    #books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "book_bp.books_list")
+
+
     book_instance, user_instance = services.read_a_book_services(repo_instance, user_name, fav_book_id)
-    if book_instance not in user_instance.read_books:
+    if book_instance not in user_instance.favourite:
         user_instance.favourite.append(book_instance)
-        return "Succeed!"
+        message= "Succeed!"
     else:
-        return "This book is already your favourite！"
+        message="This book is already your favourite！"
+
+    return message
+
+    # if "books_list" not in request.referrer:
+    #     return redirect(url_for('home_bp.home', message=message, book_id=fav_book_id))
+    # else:
+    #     return render_template(
+    #         'books_list.html',
+    #         message=message,
+    #         list_title="All Books",
+    #         books=books,
+    #         pages=pages,
+    #         prev=prev_url,
+    #         next=next_url,
+    #         target_page=target_page,
+    #         url="book_bp.books_list")
 
 
 
@@ -102,11 +186,16 @@ def book_desc():
     book_id = request.args.get("book_id")
     book = repo_instance.get_book(int(book_id))
     review = book.reviews
+    tags_list = []
+    tags = repo_instance.get_tags()
+    for tag in tags:
+        if book in tag.tagged_books and tag.tag_name not in tags_list:
+            tags_list.append(tag.tag_name)
 
     return render_template("book_desc.html",
                            book=book,
-                           reviews=review)
-
+                           reviews=review,
+                           tags=", ".join(tags_list))
 
 
 @book_blueprint.route('/review', methods=['GET', 'POST'])

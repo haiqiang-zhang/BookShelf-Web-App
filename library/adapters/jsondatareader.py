@@ -1,7 +1,13 @@
 import json
 from typing import List
 
-from library.domain.model import Publisher, Author, Book
+from library.domain.model import Publisher, Author, Book, Tag
+import library.adapters.repository as repo
+import library.domain.model
+
+from library.adapters.repository import repo_instance
+
+
 
 
 class BooksJSONReader:
@@ -35,6 +41,7 @@ class BooksJSONReader:
         authors_json = self.read_authors_file()
         books_json = self.read_books_file()
 
+
         for book_json in books_json:
             book_instance = Book(int(book_json['book_id']), book_json['title'])
             book_instance.publisher = Publisher(book_json['publisher'])
@@ -50,6 +57,19 @@ class BooksJSONReader:
             book_instance.description = book_json['description']
             if book_json['num_pages'] != "":
                 book_instance.num_pages = int(book_json['num_pages'])
+
+
+
+            #add book tag
+            for each_element in book_json['popular_shelves']:
+                for each_tag in repo.repo_instance.get_tags():
+                    if each_tag.tag_name.lower() in each_element["name"].lower():
+                        if book_instance not in each_tag.tagged_books:
+                            each_tag.add_book(book_instance)
+                            each_tag.update_size()
+                            book_instance.tags.append(each_tag)
+
+
 
             # extract the author ids:
             list_of_authors_ids = book_json['authors']

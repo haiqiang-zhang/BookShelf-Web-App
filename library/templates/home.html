@@ -17,15 +17,22 @@
                     <p>Description: {{ Desc }}</p>
 
                     <div class="add_buttom">
-                        <a href="{{ url_for('book_bp.read_a_book', read_book_id=book_id) }}"> Read the
-                            Book </a>
+                        <a href="{{ url_for('book_bp.read_a_book', read_book_id=book_id) }}"> Read the Book </a>
                         <a href="{{ url_for('book_bp.favourite_a_book', fav_book_id=book_id) }}"> Add to Favourite </a>
+                    </div>
+
+                    <div>
+                        {% if message is not none %}
+                            {{ message }}
+                        {% endif %}
                     </div>
 
                 </td>
             </tr>
             </tbody>
         </table>
+
+
 
     </main>
 {% endblock %}

@@ -14,7 +14,7 @@
 {#        </div>#}
         <div class="form-wrapper">
             <form action="{{handler_url}}" method="post">
-                {{form.book_id}} <!-- Need to include this hidden field as it tracks the article being commented. -->
+                {{form.book_id}}
                 {{form.csrf_token}} <!-- Need to include this token - Flask WTForms requires it. -->
                 <br>
                 <h2>Review</h2>

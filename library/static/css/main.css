@@ -456,7 +456,6 @@ input[type='submit']:hover {
     color: white;
     padding: 8px 35px;
     border: none;
-    display: inline-block;
     border-radius: 5px;
     font-size: 1rem;
     text-align: center;
@@ -464,6 +463,9 @@ input[type='submit']:hover {
     margin-bottom: .5rem !important;
     margin-right: 20px;
     width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .add_buttom a:hover{
@@ -471,12 +473,14 @@ input[type='submit']:hover {
     color: white;
     padding: 8px 35px;
     border: none;
-    display: inline-block;
     border-radius: 5px;
     font-size: 1rem;
     transition: all 0.3s ease;
     margin-bottom: .5rem !important;
     margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /*Search*/
@@ -543,4 +547,47 @@ input[type='submit']:hover {
     margin-top: 20px;
     flex-wrap: wrap;
 
+}
+
+
+.navi{
+    padding-left: 10px;
+    margin-right: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.navi a{
+    background-color: #7532cd;
+    color: white;
+    padding: 8px 35px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-bottom: .5rem !important;
+    margin-right: 20px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75px;
+}
+
+.navi a:hover{
+    background-color: #371b65;
+    color: white;
+    padding: 8px 35px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-bottom: .5rem !important;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75px;
 }

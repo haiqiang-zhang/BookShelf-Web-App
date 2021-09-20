@@ -12,6 +12,7 @@ from library.adapters.repository import AbstractRepository, RepositoryException
 from library.domain.model import Publisher, Author, Book, Review, User, BooksInventory, Tag
 import library.domain.model
 
+
 class MemoryRepository(AbstractRepository):
     # Articles ordered by date, not id. id is assumed unique.
 
@@ -26,20 +27,19 @@ class MemoryRepository(AbstractRepository):
     def add_user(self, user: User):
         self.__users.append(user)
 
-
     def get_user(self, user_name) -> User:
         return next((user for user in self.__users if user.user_name == user_name), None)
 
     def get_all_user(self) -> List[User]:
         return self.__users
 
-    def get_user_num_of_read_book(self, user:User) -> int:
+    def get_user_num_of_read_book(self, user: User) -> int:
         return len(user.read_books)
 
-    def get_user_read_book(self, user:User) -> List[Book]:
+    def get_user_read_book(self, user: User) -> List[Book]:
         return user.read_books
 
-    def get_favourite(self, user:User):
+    def get_favourite(self, user: User):
         return user.favourite
 
     def add_book(self, book: Book):
@@ -80,7 +80,7 @@ class MemoryRepository(AbstractRepository):
         books = [self.__books_index[id] for id in existing_ids]
         return books
 
-    def get_books_by_index(self, index: List[int])-> List[Book]:
+    def get_books_by_index(self, index: List[int]) -> List[Book]:
         return [self.__books[index] for index in index]
 
     def get_books_by_authors(self, author_input: str) -> List[Book]:
@@ -133,6 +133,12 @@ class MemoryRepository(AbstractRepository):
     def get_tags(self) -> List[Tag]:
         return self.__tags
 
+    def get_tag_by_name(self, name:str):
+        for tag in self.__tags:
+            if tag.tag_name == name:
+                return tag
+        return None
+
     def add_review(self, review: Review):
         # call parent class first, add_comment relies on implementation of code common to all derived classes
         super().add_review(review)
@@ -172,6 +178,11 @@ def load_books_and_author(data_path: Path, repo: MemoryRepository):
         repo.add_book(book)
 
 
+def load_tags(data_path: Path, repo: MemoryRepository):
+    tag_path = str(Path(data_path) / "tags.csv")
+    for data_row in read_csv_file(tag_path):
+        tag = Tag(data_row[0])
+        repo.add_tag(tag)
 
 
 def load_users(data_path: Path, repo: MemoryRepository):
@@ -186,7 +197,7 @@ def load_users(data_path: Path, repo: MemoryRepository):
         id_list = data_row[3].strip().split(",")
         for id in id_list:
             if id != "":
-                user.read_books.append(repo.get_book(int(id)))
+                user.read_a_book(repo.get_book(int(id)))
         repo.add_user(user)
         users[data_row[0]] = user
     return users
@@ -205,24 +216,23 @@ def load_reviews(data_path: Path, repo: MemoryRepository, users):
 
 
 def populate(data_path: Path, repo: MemoryRepository):
-    # Load articles and tags into the repository.
+    load_tags(data_path, repo)
+
     load_books_and_author(data_path, repo)
 
-    # Load users into the repository.
     users = load_users(data_path, repo)
 
-    # Load comments into the repository.
     load_reviews(data_path, repo, users)
 
 
-def get_book_by_id_and_given_list(list_book:List[Book], id:int):
+def get_book_by_id_and_given_list(list_book: List[Book], id: int):
     for book in list_book:
         if book.book_id == id:
             return book
     return None
 
 
-def get_books_by_title_and_given_list(list_book:List[Book], title:str):
+def get_books_by_title_and_given_list(list_book: List[Book], title: str):
     matching_books = list()
     try:
         for book in list_book:
@@ -232,7 +242,8 @@ def get_books_by_title_and_given_list(list_book:List[Book], title:str):
         pass
     return matching_books
 
-def get_books_by_author_and_given_list(list_book:List[Book], author_input:str):
+
+def get_books_by_author_and_given_list(list_book: List[Book], author_input: str):
     matching_books = list()
     try:
         for book in list_book:
@@ -244,7 +255,7 @@ def get_books_by_author_and_given_list(list_book:List[Book], author_input:str):
     return matching_books
 
 
-def get_books_by_year_and_given_list(list_book:List[Book], release_year:int):
+def get_books_by_year_and_given_list(list_book: List[Book], release_year: int):
     matching_books = list()
     try:
         for book in list_book:

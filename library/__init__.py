@@ -62,6 +62,9 @@ def create_app(test_config = None):
         from .search_blueprint import search
         app.register_blueprint(search.search_blueprint)
 
+        from .user_homepage_blueprint import user_homepage
+        app.register_blueprint(user_homepage.user_homepage_blueprint)
+
         from .test_blueprint import test
         app.register_blueprint(test.test_blueprint)
 

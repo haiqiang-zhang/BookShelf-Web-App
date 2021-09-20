@@ -3,32 +3,54 @@
 {% block content %}
     <h1> User Homepage</h1>
 
-
+<div>
     <div class="row">
         <div class="col-sm-4">
             <div class="power_full">
                 <div class="icon_user_homepage"><img src="{{ url_for('static', filename='images/badge.png') }}"
                                                      class="user_img"></div>
                 <h2 class="powerful_text">You've over {{ percentage }}% users!</h2>
-            </div>
-
-        </div>
-        <div class="col-sm-4">
-            <div class="power">
-                <div class="icon_user_homepage"><a href="#"><img
-                        src="{{ url_for('static', filename='images/viewed_book.png') }}" class="user_img"></a></div>
-                <h2 class="totaly_text">You've read {{ book }} books!</h2>
-            </div>
-
-        </div>
-        <div class="col-sm-4">
-            <div class="power">
-                <div class="icon_user_homepage"><a href="#"><img
-                        src="{{ url_for('static', filename='images/blank-page.png') }}" class="user_img"></a></div>
-                <h2 class="totaly_text">You've read a total of {{ page }} pages!</h2>
-            </div>
         </div>
     </div>
+
+    <div class="col-sm-4">
+        <div class="power">
+            <div class="icon_user_homepage"><a href="{{ url_for('book_bp.read_book') }}"><img
+                    src="{{ url_for('static', filename='images/viewed_book.png') }}" class="user_img"></a></div>
+            <h2 class="totaly_text">You've read {{ book }} books!</h2>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="power">
+            <div class="icon_user_homepage"><a href="#"><img
+                    src="{{ url_for('static', filename='images/blank-page.png') }}" class="user_img"></a></div>
+            <h2 class="totaly_text">You've read a total of {{ page }} pages!</h2>
+        </div>
+    </div>
+
+    </div>
+<br>
+<h2>
+    Your Tags
+</h2>
+
+    <div>
+        {% for tag in tags %}
+            <a href="{{ url_for("user_homepage_bp.delete_tag", tag_name=tag.tag_name) }}">{{ tag.tag_name }}</a>
+
+        {% endfor %}
+    </div>
+
+    <form action="{{handler_url}}" method="post">
+        {{form.csrf_token}} <!-- Need to include this token - Flask WTForms requires it. -->
+        <div>
+            {{ form.tag_select }}
+            {{ form.submit }}
+        </div>
+
+
+    </form>
 
 
 

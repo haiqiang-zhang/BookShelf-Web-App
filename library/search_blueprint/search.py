@@ -61,6 +61,8 @@ class SearchForm(FlaskForm):
 def search_result():
     global research_book_result
     target_page = request.args.get("page")
-    books, pages, prev_url, next_url, target_page = form_book_list(target_page, research_book_result, "Search Result")
+    books, pages, prev_url, next_url, target_page = form_book_list(target_page, research_book_result,
+                                                                   "search_bp.search_result")
     return render_template('books_list.html', books=books, pages=pages, prev=prev_url, next=next_url,
-                           target_page=target_page, list_title="Search Result", scope_text=scope_text)
+                           target_page=target_page, list_title="Search Result", scope_text=scope_text,
+                           url="search_bp.search_result")
