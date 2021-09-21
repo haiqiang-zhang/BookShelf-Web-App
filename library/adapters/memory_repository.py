@@ -278,10 +278,14 @@ def write_user_to_csv(user_name, password):
     data_path = Path('library') / 'adapters' / 'data'
     users_filename = str(Path(data_path) / "users.csv")
     row_list = []
+    user_name_list = []
     for row in read_csv_file(users_filename):
         row_list = row
+        user_name_list.append(row[1])
 
     read_csv_file(users_filename).close()
+    if user_name in user_name_list:
+        return
 
     last_id = int(row_list[0])
     with open(users_filename, 'a+', encoding='utf-8-sig', newline='') as infile:
