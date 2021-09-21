@@ -145,26 +145,6 @@ img {
     font-size: 20px;
 }
 
-.user_homepage_function_ul li{
-    text-align: center;
-
-    width: 200px;
-    height: 70px;
-    background-color: #f5f2f2;
-    border-radius: 30px;
-    margin-right: 30px;
-    margin-left: 30px;
-    float: left;
-    box-shadow: 0px 0px 8px 0px;
-}
-
-.user_homepage_function_ul {
-
-}
-
-.user_homepage_function_ul a{
-
-}
 
 .all_book_main {
     margin: 20px;
@@ -590,4 +570,33 @@ input[type='submit']:hover {
     justify-content: center;
     align-items: center;
     height: 75px;
+}
+
+
+/*User Homepage*/
+.user_homepage_function_ul li{
+    text-align: center;
+
+    width: 200px;
+    height: 70px;
+    background-color: #f5f2f2;
+    border-radius: 30px;
+    margin-right: 30px;
+    margin-left: 30px;
+    float: left;
+    box-shadow: 0px 0px 8px 0px;
+}
+
+
+
+
+
+.tag {
+    display: flex;
+    align-items: center;
+}
+
+.tag input{
+    width: 100px;
+    margin-left: 20px;
 }

@@ -55,4 +55,4 @@ def delete_tag():
 
 class TagForm(FlaskForm):
     tag_select = SelectField('tag_select')
-    submit = SubmitField('Submit')
+    submit = SubmitField('Add Tag')

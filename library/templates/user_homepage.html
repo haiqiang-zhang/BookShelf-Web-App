@@ -44,7 +44,7 @@
 
     <form action="{{handler_url}}" method="post">
         {{form.csrf_token}} <!-- Need to include this token - Flask WTForms requires it. -->
-        <div>
+        <div class="tag">
             {{ form.tag_select }}
             {{ form.submit }}
         </div>
