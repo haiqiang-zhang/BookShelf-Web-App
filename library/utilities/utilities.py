@@ -17,4 +17,3 @@ def get_tags_and_urls():
 
     return tag_urls
 
-

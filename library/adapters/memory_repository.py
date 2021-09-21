@@ -9,8 +9,7 @@ from werkzeug.security import generate_password_hash
 
 from library.adapters.jsondatareader import BooksJSONReader
 from library.adapters.repository import AbstractRepository, RepositoryException
-from library.domain.model import Publisher, Author, Book, Review, User, BooksInventory, Tag
-import library.domain.model
+from library.domain.model import Publisher, Author, Book, Review, User, BooksInventory, Tag, make_review
 
 
 class MemoryRepository(AbstractRepository):
@@ -206,7 +205,7 @@ def load_users(data_path: Path, repo: MemoryRepository):
 def load_reviews(data_path: Path, repo: MemoryRepository, users):
     review_filename = str(Path(data_path) / "reviews.csv")
     for data_row in read_csv_file(review_filename):
-        review = library.domain.model.make_review(
+        review = make_review(
             review_text=data_row[3],
             user=users[data_row[1]],
             book=repo.get_book(int(data_row[2])),
@@ -264,3 +263,21 @@ def get_books_by_year_and_given_list(list_book: List[Book], release_year: int):
     except ValueError:
         pass
     return matching_books
+
+
+
+def write_user_to_csv(user_name, password):
+    data_path = Path('library') / 'adapters' / 'data'
+    users_filename = str(Path(data_path) / "users.csv")
+    row_list = []
+    for row in read_csv_file(users_filename):
+        row_list = row
+
+    read_csv_file(users_filename).close()
+
+    last_id = int(row_list[0])
+    with open(users_filename, 'a+', encoding='utf-8-sig', newline='') as infile:
+        f_csv = csv.writer(infile)
+        f_csv.writerow([last_id+1, user_name, password, ""])
+
+
