@@ -35,6 +35,7 @@
                                 <h3>{{ book.title }} </h3>
 
                             </a>
+                            <p>Book ID: {{ book.book_id }}</p>
                             <p>Release year: {{ book.release_year }}</p>
                             <p>Publisher: {{ book.publisher.name }}</p>
                             <p> Authors:
@@ -47,9 +48,7 @@
 
 
                     {% if list_title == "All Books" or (list_title == "Search Result" and scope_text== "All Books") %}
-                    {% endif %}
-
-                    <td>
+                        <td>
                         <div class="add_buttom">
                             <a href="{{ url_for('book_bp.read_a_book', read_book_id=book.book_id) }}"> Read the
                                 Book </a>
@@ -57,6 +56,9 @@
                                 Favourite </a>
                         </div>
                     </td>
+                    {% endif %}
+
+
 
 
                 </tr>
