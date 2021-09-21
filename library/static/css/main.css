@@ -9,6 +9,20 @@
     font-family: 'Josefin Sans', sans-serif;
 }
 
+a {
+    color: #7532cd;
+}
+
+
+a h3{
+    color: #7532cd;
+}
+
+
+a h3:hover{
+    color: #371b65;
+}
+
 body,
 html {
     height: 100%;
@@ -18,6 +32,8 @@ h1 {
     text-align: center;
     font-weight: bold;
 }
+
+
 
 
 
@@ -600,3 +616,5 @@ input[type='submit']:hover {
     width: 100px;
     margin-left: 20px;
 }
+
+

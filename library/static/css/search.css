@@ -36,10 +36,6 @@ pre {
     font-size: 1em
 }
 
-a {
-    background-color: transparent;
-    -webkit-text-decoration-skip: objects
-}
 
 abbr[title] {
     border-bottom: none;
