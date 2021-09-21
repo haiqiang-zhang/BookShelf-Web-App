@@ -184,8 +184,8 @@ def favourite_a_book():
 @book_blueprint.route('/book_desc')
 def book_desc():
     book_id = request.args.get("book_id")
-    book = repo_instance.get_book(int(book_id))
-    review = book.reviews
+    review = services.get_review(book_id, repo_instance)
+    book = services.get_book(book_id, repo_instance)
     tags_list = []
     tags = repo_instance.get_tags()
     for tag in tags:

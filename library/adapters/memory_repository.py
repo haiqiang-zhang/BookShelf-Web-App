@@ -107,19 +107,26 @@ class MemoryRepository(AbstractRepository):
         matching_articles = list()
         try:
             for book in self.__books:
-                if title in book.title:
+                if title.lower() in book.title.lower():
                     matching_articles.append(book)
         except ValueError:
             pass
         return matching_articles
 
+
+    def get_tag(self, tag_name):
+        for tag in self.__tags:
+            if tag_name == tag.tag_name:
+                return tag
+        return None
+
     def get_books_ids_for_tag(self, tag_name: str):
         # Linear search_blueprint, to find the first occurrence of a Tag with the name tag_name.
-        tag = next((tag for tag in self.__tags if tag.tag_name == tag_name), None)
+        tag = self.get_tag(tag_name)
 
         # Retrieve the ids of articles associated with the Tag.
         if tag is not None:
-            book_ids = [book.id for book in tag.tagged_books]
+            book_ids = [book.book_id for book in tag.tagged_books]
         else:
             # No Tag with name tag_name, so return an empty list.
             book_ids = list()
@@ -172,9 +179,10 @@ def load_books_and_author(data_path: Path, repo: MemoryRepository):
     book_path = str(Path(data_path) / "comic_books_excerpt.json")
     author_path = str(Path(data_path) / "book_authors_excerpt.json")
     JSONReader = BooksJSONReader(book_path, author_path)
-    JSONReader.read_json_files()
+    JSONReader.read_json_files(repo)
     for book in JSONReader.dataset_of_books:
         repo.add_book(book)
+
 
 
 def load_tags(data_path: Path, repo: MemoryRepository):
@@ -235,7 +243,7 @@ def get_books_by_title_and_given_list(list_book: List[Book], title: str):
     matching_books = list()
     try:
         for book in list_book:
-            if title in book.title:
+            if title.lower() in book.title.lower():
                 matching_books.append(book)
     except ValueError:
         pass

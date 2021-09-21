@@ -37,7 +37,7 @@ class BooksJSONReader:
                 authors_json.append(author_entry)
         return authors_json
 
-    def read_json_files(self):
+    def read_json_files(self, repo):
         authors_json = self.read_authors_file()
         books_json = self.read_books_file()
 
@@ -62,7 +62,7 @@ class BooksJSONReader:
 
             #add book tag
             for each_element in book_json['popular_shelves']:
-                for each_tag in repo.repo_instance.get_tags():
+                for each_tag in repo.get_tags():
                     if each_tag.tag_name.lower() in each_element["name"].lower():
                         if (book_instance not in each_tag.tagged_books) and (each_tag not in book_instance.tags):
                             each_tag.add_book(book_instance)

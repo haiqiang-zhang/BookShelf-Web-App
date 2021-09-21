@@ -123,8 +123,8 @@ class Book:
 
 
     @property
-    def reviews(self) -> Iterable['Review']:
-        return iter(self.__reviews)
+    def reviews(self):
+        return self.__reviews
 
     @property
     def book_id(self) -> int:
@@ -145,7 +145,7 @@ class Book:
         else:
             raise ValueError
 
-    @property
+
     def update_rating(self, rating):
         self.__rating_count += 1
         self.__rating += rating
@@ -234,8 +234,8 @@ class Book:
             self.__num_pages = num_pages
 
     @property
-    def number_of_comments(self) -> int:
-        return len(self.__comments)
+    def number_of_reviews(self) -> int:
+        return len(self.__reviews)
 
     @property
     def number_of_tags(self) -> int:
@@ -492,7 +492,7 @@ class Tag:
         return self.__tagged_books
 
     @property
-    def number_of_tagged_articles(self) -> int:
+    def number_of_tagged_books(self) -> int:
         return len(self.__tagged_books)
 
     def is_applied_to(self, book: Book) -> bool:

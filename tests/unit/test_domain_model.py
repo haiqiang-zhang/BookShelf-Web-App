@@ -1,9 +1,11 @@
 from pathlib import Path
 import pytest
 
+from library import MemoryRepository
+from library.adapters.memory_repository import load_tags
 from utils import get_project_root
 
-from library.domain.model import Publisher, Author, Book, Review, User, BooksInventory
+from library.domain.model import Publisher, Author, Book, Review, User, BooksInventory, Tag
 from library.adapters.jsondatareader import BooksJSONReader
 
 class TestPublisher:
@@ -285,45 +287,50 @@ class TestBook:
 class TestReview:
 
     def test_construction(self):
+        user1 = User('Shyamli', 'pw12345')
         book = Book(2675376, "Harry Potter")
         review_text = "  This book was very enjoyable.   "
         rating = 4
-        review = Review(book, review_text, rating)
+        review = Review(book, review_text, rating,user1)
 
         assert str(review.book) == "<Book Harry Potter, book id = 2675376>"
         assert str(review.review_text) == "This book was very enjoyable."
-        assert review.rating == 4
+        assert review.get_rating == 4
 
     def test_attributes_access(self):
+        user1 = User('Shyamli', 'pw12345')
         book = Book(2675376, "Harry Potter")
-        review = Review(book, 42, 3)
+        review = Review(book, 42, 3,user1)
         assert str(review.book) == "<Book Harry Potter, book id = 2675376>"
         assert str(review.review_text) == "N/A"
-        assert review.rating == 3
+        assert review.get_rating == 3
 
     def test_invalid_parameters(self):
         book = Book(2675376, "Harry Potter")
+        user1 = User('Shyamli', 'pw12345')
         review_text = "This book was very enjoyable."
 
         with pytest.raises(ValueError):
-            review = Review(book, review_text, -1)
+            review = Review(book, review_text, -1,user1)
 
         with pytest.raises(ValueError):
-            review = Review(book, review_text, 6)
+            review = Review(book, review_text, 6,user1)
 
     def test_set_of_reviews(self):
+        user1 = User('Shyamli', 'pw12345')
         book1 = Book(2675376, "Harry Potter")
         book2 = Book(874658, "Lord of the Rings")
-        review1 = Review(book1, "I liked this book", 4)
-        review2 = Review(book2, "This book was ok", 3)
-        review3 = Review(book1, "This book was exceptional", 5)
+        review1 = Review(book1, "I liked this book", 4,user1)
+        review2 = Review(book2, "This book was ok", 3,user1)
+        review3 = Review(book1, "This book was exceptional", 5,user1)
         assert review1 != review2
         assert review1 != review3
         assert review3 != review2
 
     def test_wrong_book_object(self):
         publisher = Publisher("DC Comics")
-        review = Review(publisher, "I liked this book", 4)
+        user1 = User('Shyamli', 'pw12345')
+        review = Review(publisher, "I liked this book", 4, user1)
         assert review.book is None
 
 class TestUser:
@@ -379,14 +386,14 @@ class TestUser:
         books = [Book(874658, "Harry Potter"), Book(89576, "Lord of the Rings")]
         user = User("Martin", "pw12345")
         assert user.reviews == []
-        review1 = Review(books[0], "I liked this book", 4)
-        review2 = Review(books[1], "This book was ok", 2)
+        review1 = Review(books[0], "I liked this book", 4, user)
+        review2 = Review(books[1], "This book was ok", 2, user)
         user.add_review(review1)
         user.add_review(review2)
         assert str(user.reviews[0].review_text) == "I liked this book"
-        assert user.reviews[0].rating == 4
+        assert user.reviews[0].get_rating == 4
         assert str(user.reviews[1].review_text) == "This book was ok"
-        assert user.reviews[1].rating == 2
+        assert user.reviews[1].get_rating == 2
 
     def test_passwords(self):
         user1 = User('  Shyamli   ', 'pw12345')
@@ -399,6 +406,10 @@ class TestUser:
 
 @pytest.fixture
 def read_books_and_authors():
+    TEST_DATA_PATH = get_project_root() / "tests" / "data"
+    repo = MemoryRepository()
+    load_tags(TEST_DATA_PATH, repo)
+
     books_file_name = 'comic_books_excerpt.json'
     authors_file_name = 'book_authors_excerpt.json'
 
@@ -409,7 +420,7 @@ def read_books_and_authors():
     path_to_books_file = str(root_folder / data_folder / books_file_name)
     path_to_authors_file = str(root_folder / data_folder / authors_file_name)
     reader = BooksJSONReader(path_to_books_file, path_to_authors_file)
-    reader.read_json_files()
+    reader.read_json_files(repo)
     return reader.dataset_of_books
 
 

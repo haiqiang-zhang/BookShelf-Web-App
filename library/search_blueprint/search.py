@@ -29,6 +29,9 @@ def search():
     if form.validate_on_submit():
         search_content = form.search_content.data
         select_items = form.select.data
+        if search_scope == [] and scope_text == "":
+            search_scope = "books_list"
+            scope_text = "All Books"
         try:
             research_book_result = search_book(repo_instance, select_items, search_content, search_scope).copy()
         except ValueError:

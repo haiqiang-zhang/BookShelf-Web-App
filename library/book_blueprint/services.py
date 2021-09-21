@@ -76,3 +76,14 @@ def add_review(book_id: int, review_text: str, user_name: str,rating , repo: Abs
     repo.add_review(review)
 
 
+def get_review(book_id, repo_instance):
+    book = get_book(int(book_id),repo_instance)
+
+    review = book.reviews
+    return review
+
+def get_book(book_id, repo_instance):
+    book = repo_instance.get_book(int(book_id))
+    if book is None:
+        raise NonExistentArticleException
+    return book
