@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, url_for, request, redirect
 
 from library.adapters.repository import AbstractRepository
-from library.domain.model import make_review
+from library.domain.model import make_review, User
+from library.adapters.memory_repository import count_fav_tag
 
 class NonExistentArticleException(Exception):
     pass
@@ -87,3 +88,10 @@ def get_book(book_id, repo_instance):
     if book is None:
         raise NonExistentArticleException
     return book
+
+
+def auto_add_tag(user:User, repo_instance:AbstractRepository):
+    tag_dict = count_fav_tag(user)
+    for t_name in tag_dict:
+        if tag_dict[t_name] >= 3:
+            user.add_a_tag(repo_instance.get_tag(t_name))

@@ -113,7 +113,6 @@ class MemoryRepository(AbstractRepository):
             pass
         return matching_articles
 
-
     def get_tag(self, tag_name):
         for tag in self.__tags:
             if tag_name == tag.tag_name:
@@ -139,7 +138,7 @@ class MemoryRepository(AbstractRepository):
     def get_tags(self) -> List[Tag]:
         return self.__tags
 
-    def get_tag_by_name(self, name:str):
+    def get_tag_by_name(self, name: str):
         for tag in self.__tags:
             if tag.tag_name == name:
                 return tag
@@ -182,7 +181,6 @@ def load_books_and_author(data_path: Path, repo: MemoryRepository):
     JSONReader.read_json_files(repo)
     for book in JSONReader.dataset_of_books:
         repo.add_book(book)
-
 
 
 def load_tags(data_path: Path, repo: MemoryRepository):
@@ -273,7 +271,6 @@ def get_books_by_year_and_given_list(list_book: List[Book], release_year: int):
     return matching_books
 
 
-
 def write_user_to_csv(user_name, password):
     data_path = Path('library') / 'adapters' / 'data'
     users_filename = str(Path(data_path) / "users.csv")
@@ -290,6 +287,15 @@ def write_user_to_csv(user_name, password):
     last_id = int(row_list[0])
     with open(users_filename, 'a+', encoding='utf-8-sig', newline='') as infile:
         f_csv = csv.writer(infile)
-        f_csv.writerow([last_id+1, user_name, password, ""])
+        f_csv.writerow([last_id + 1, user_name, password, ""])
 
 
+def count_fav_tag(user_instance: User):
+    tag_dict = {}
+    for fav_book in user_instance.favourite:
+        for tag in fav_book.tags:
+            if tag.tag_name in tag_dict:
+                tag_dict[tag.tag_name] += 1
+            else:
+                tag_dict[tag.tag_name] = 1
+    return tag_dict

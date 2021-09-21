@@ -296,7 +296,7 @@ class User:
 
         self.__read_books = []
         self.__reviews = []
-        self.__favourite = []
+        self.__favourite:List[Book] = []
         self.__pages_read = 0
         self.__tags = []
 
@@ -306,7 +306,13 @@ class User:
 
     @tags.setter
     def tags(self, tags):
-        self.__tags.append(tags)
+        if tags not in self.__tags:
+            self.__tags.append(tags)
+
+
+    def add_a_tag(self,tag):
+        if tag not in self.__tags:
+            self.__tags.append(tag)
 
 
     @property

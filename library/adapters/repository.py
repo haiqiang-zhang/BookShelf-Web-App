@@ -149,6 +149,10 @@ class AbstractRepository(abc.ABC):
         """ Returns the Comments stored in the repository. """
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def get_tag(self, tag_name):
+        raise NotImplementedError
+
 
 
 
