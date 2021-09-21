@@ -64,7 +64,7 @@ class BooksJSONReader:
             for each_element in book_json['popular_shelves']:
                 for each_tag in repo.repo_instance.get_tags():
                     if each_tag.tag_name.lower() in each_element["name"].lower():
-                        if book_instance not in each_tag.tagged_books:
+                        if (book_instance not in each_tag.tagged_books) and (each_tag not in book_instance.tags):
                             each_tag.add_book(book_instance)
                             each_tag.update_size()
                             book_instance.tags.append(each_tag)

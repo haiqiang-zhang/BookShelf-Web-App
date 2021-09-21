@@ -18,7 +18,3 @@ def get_tags_and_urls():
     return tag_urls
 
 
-def get_selected_books(quantity=3):
-    books = services.get_random_books(quantity, repo.repo_instance)
-
-    return books
