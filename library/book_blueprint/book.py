@@ -246,3 +246,29 @@ class ReviewForm(FlaskForm):
 
 
 
+@book_blueprint.route('/delete_fav_book')
+@login_required
+def delete_fav_book():
+    try:
+        book_id = int(request.args.get("book_id"))
+        page = int(request.args.get("page"))
+        user_name = session["user_name"]
+        services.delete_fav_book_service(book_id, user_name, repo_instance)
+        return redirect(url_for("book_bp.favourite_book", page=page))
+    except:
+        return "Unexpected Error!"
+
+
+@book_blueprint.route('/delete_read_book')
+@login_required
+def delete_read_book():
+    try:
+        book_id = int(request.args.get("book_id"))
+        page = int(request.args.get("page"))
+        user_name = session["user_name"]
+        services.delete_read_book_service(book_id, user_name, repo_instance)
+        return redirect(url_for("book_bp.read_book", page=page))
+    except:
+        return "Unexpected Error!"
+
+
