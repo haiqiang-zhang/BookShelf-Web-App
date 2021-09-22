@@ -47,6 +47,7 @@
                                     {{ author.full_name }},
                                 {% endfor %}
                             </p>
+                            <p>Book tags are: {{ book.get_tag_str() }}</p>
                         </div>
                     </td>
 

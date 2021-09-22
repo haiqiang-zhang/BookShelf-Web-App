@@ -249,6 +249,12 @@ class Book:
     def tags(self, tag):
         self.__tags.append(tag)
 
+    def get_tag_str(self):
+        tag_list = []
+        for tag in self.__tags:
+            tag_list.append(tag.tag_name)
+        return " ,".join(tag_list)
+
     def is_tagged_by(self, tag: 'Tag'):
         return tag in self.__tags
 

@@ -21,10 +21,10 @@ book_blueprint = Blueprint(
 @book_blueprint.route('/books_list')
 def books_list():
     session['search_field'] = "All Books"
-    books_list = repo_instance.get_all_books()
+    books_list = services.get_all_books(repo_instance)
     target_page = request.args.get('page')
     books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "book_bp.books_list")
-    tags = repo_instance.get_tags()
+    tags = services.get_tags(repo_instance)
 
     return render_template(
         'books_list.html',
@@ -45,12 +45,12 @@ def book_type_list():
     books_list = []
     books_list_size = 0
     tag_str = request.args.get('tag')
-    for tag in repo_instance.get_tags():
+    for tag in services.get_tags(repo_instance):
         if tag.tag_name == tag_str:
             books_list = tag.tagged_books
             books_list_size = tag.size
             break
-    tags = repo_instance.get_tags()
+    tags = services.get_tags(repo_instance)
     total_books = "(Total is " + str(books_list_size) + " books)"
     target_page = request.args.get('page')
     books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "book_bp.book_type_list", tag_str)
@@ -73,8 +73,8 @@ def book_type_list():
 @login_required
 def read_book():
     if 'user_name' in session:
-        user = repo_instance.get_user(session['user_name'])
-        books_list = repo_instance.get_user_read_book(user)
+        user = services.get_user(session['user_name'], repo_instance)
+        books_list = services.get_user_read_book(user, repo_instance)
         target_page = request.args.get('page')
         books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "book_bp.read_book")
         return render_template(
@@ -92,8 +92,8 @@ def read_book():
 @login_required
 def favourite_book():
     if 'user_name' in session:
-        user = repo_instance.get_user(session['user_name'])
-        books_list = repo_instance.get_favourite(user)
+        user = services.get_user(session['user_name'], repo_instance)
+        books_list = services.get_favourite(user, repo_instance)
         target_page = request.args.get('page')
         books, pages, prev_url, next_url, target_page = form_book_list(target_page, books_list, "book_bp.favourite_book")
         return render_template(
@@ -187,7 +187,7 @@ def book_desc():
     book_id = request.args.get("book_id")
     review = services.get_review(book_id, repo_instance)
     book = services.get_book(book_id, repo_instance)
-    tags_list = services.get_tags(book, repo_instance)
+    tags_list = services.get_tag(book, repo_instance)
     rating = services.get_rating(book)
     rating_count = services.get_rating_count(book)
 
@@ -214,7 +214,7 @@ def review():
     else:
         book_id = int(form.book_id.data)
     book = services.get_book(book_id, repo_instance)
-    tags_list = services.get_tags(book, repo_instance)
+    tags_list = services.get_tag(book, repo_instance)
     rating = services.get_rating(book)
     rating_count = services.get_rating_count(book)
     review = services.get_review_by_book(book)

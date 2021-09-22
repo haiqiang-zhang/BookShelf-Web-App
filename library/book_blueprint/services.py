@@ -116,7 +116,7 @@ def delete_read_book_service(book_id:int, user_name:str, repo_instance:AbstractR
 
 
 
-def get_tags(book, repo_instance):
+def get_tag(book, repo_instance):
     tags_list = []
     tags = repo_instance.get_tags()
     for tag in tags:
@@ -140,3 +140,19 @@ def get_rating_count(book):
     for review in book.reviews:
         count += 1
     return count
+
+def get_tags(repo_instance):
+    return repo_instance.get_tags()
+
+
+def get_all_books(repo_instance):
+    return repo_instance.get_all_books()
+
+def get_user(user_name, repo_instance):
+    return repo_instance.get_user(user_name)
+
+def get_user_read_book(user, repo_instance):
+    return repo_instance.get_user_read_book(user)
+
+def get_favourite(user, repo_instance):
+    return repo_instance.get_favourite(user)
