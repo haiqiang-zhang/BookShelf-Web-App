@@ -87,7 +87,7 @@ class MemoryRepository(AbstractRepository):
         try:
             for book in self.__books:
                 for author in book.authors:
-                    if author_input in author.full_name:
+                    if author_input.lower() in author.full_name.lower():
                         matching_articles.append(book)
         except ValueError:
             pass
@@ -253,7 +253,7 @@ def get_books_by_author_and_given_list(list_book: List[Book], author_input: str)
     try:
         for book in list_book:
             for author in book.authors:
-                if author_input in author.full_name:
+                if author_input.lower() in author.full_name.lower():
                     matching_books.append(book)
     except ValueError:
         pass
