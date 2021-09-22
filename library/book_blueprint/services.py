@@ -83,6 +83,12 @@ def get_review(book_id, repo_instance):
     review = book.reviews
     return review
 
+def get_review_by_book(book):
+    review = book.reviews
+    return review
+
+
+
 def get_book(book_id, repo_instance):
     book = repo_instance.get_book(int(book_id))
     if book is None:
@@ -109,3 +115,28 @@ def delete_read_book_service(book_id:int, user_name:str, repo_instance:AbstractR
     user.read_books.remove(book)
 
 
+
+def get_tags(book, repo_instance):
+    tags_list = []
+    tags = repo_instance.get_tags()
+    for tag in tags:
+        if book in tag.tagged_books and tag.tag_name not in tags_list:
+            tags_list.append(tag.tag_name)
+    return tags_list
+
+
+def get_rating(book):
+    count = 0
+    rating = 0
+    for review in book.reviews:
+        count += 1
+        rating += review.get_rating
+    if count == 0:
+        return 0
+    return round(rating / count, 2)
+
+def get_rating_count(book):
+    count = 0
+    for review in book.reviews:
+        count += 1
+    return count

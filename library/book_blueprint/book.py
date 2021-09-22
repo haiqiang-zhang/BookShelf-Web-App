@@ -187,16 +187,16 @@ def book_desc():
     book_id = request.args.get("book_id")
     review = services.get_review(book_id, repo_instance)
     book = services.get_book(book_id, repo_instance)
-    tags_list = []
-    tags = repo_instance.get_tags()
-    for tag in tags:
-        if book in tag.tagged_books and tag.tag_name not in tags_list:
-            tags_list.append(tag.tag_name)
+    tags_list = services.get_tags(book, repo_instance)
+    rating = services.get_rating(book)
+    rating_count = services.get_rating_count(book)
 
     return render_template("book_desc.html",
                            book=book,
                            reviews=review,
-                           tags=", ".join(tags_list))
+                           tags=", ".join(tags_list),
+                           rating=rating,
+                           rating_count=rating_count)
 
 
 @book_blueprint.route('/review', methods=['GET', 'POST'])
@@ -207,20 +207,27 @@ def review():
     if form.validate_on_submit():
         book_id = int(form.book_id.data)
         services.add_review(book_id, form.review.data, user_name,int(form.rating.data), repo_instance)
-        book = repo_instance.get_book(book_id)
         return redirect(url_for('book_bp.book_desc', book_id=book_id))
     if request.method == 'GET':
         book_id = int(request.args.get('book_id'))
         form.book_id.data = book_id
     else:
         book_id = int(form.book_id.data)
-    book = repo_instance.get_book(book_id)
+    book = services.get_book(book_id, repo_instance)
+    tags_list = services.get_tags(book, repo_instance)
+    rating = services.get_rating(book)
+    rating_count = services.get_rating_count(book)
+    review = services.get_review_by_book(book)
     return render_template(
         'Review.html',
         book=book,
         form=form,
-        handler_url=url_for('book_bp.review')
-    )
+        handler_url=url_for('book_bp.review'),
+        tags=", ".join(tags_list),
+        book_id=book_id,
+        rating=rating,
+        rating_count=rating_count,
+        reviews=review)
 
 
 class ProfanityFree:

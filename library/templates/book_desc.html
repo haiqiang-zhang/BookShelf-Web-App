@@ -19,6 +19,10 @@
                 {% endfor %}
             </p>
             <p>Book tags are: {{ tags }}</p>
+
+            {% if rating != 0 %}
+                <p>Average rating: {{ rating }} ({{ rating_count }} people have rated this book)</p>
+            {% endif %}
             <div class="add_buttom">
                 <a href="{{ url_for('book_bp.read_a_book', read_book_id=book.book_id) }}"> Read the
                     Book </a>
