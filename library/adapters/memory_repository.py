@@ -182,7 +182,6 @@ def load_books_and_author(data_path: Path, repo: MemoryRepository):
     for book in JSONReader.dataset_of_books:
         repo.add_book(book)
 
-
 def load_tags(data_path: Path, repo: MemoryRepository):
     tag_path = str(Path(data_path) / "tags.csv")
     for data_row in read_csv_file(tag_path):
