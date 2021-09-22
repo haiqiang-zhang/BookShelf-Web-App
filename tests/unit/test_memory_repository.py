@@ -48,6 +48,8 @@ def test_repository_can_retrieve_books(in_memory_repo):
     assert book.is_tagged_by(Tag('Fantasy')) is False
 
 
+
+
 def test_repository_does_not_retrieve_a_non_existent_book(in_memory_repo):
     article = in_memory_repo.get_book(101)
     assert article is None

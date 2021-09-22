@@ -1,16 +1,19 @@
-# COMPSCI 235 Starter Repository for Assignment 2
+# "Bookshelf" Web App
+### Team: NJUST Team1
+### Author: Haiqiang Zhang & Jinhua Fan
+
+---
 
 
 ## Description
 
-This repository contains an implementation of the domain model from Assignment 1. 
-It contains unit tests which can be run through pytest. 
-It also contains a simple Flask application that renders content of a Book object instance from our domain model on a blank html page.
+We design the "BookShelf" Web App to show books information, manage user's reading data, and provide personal recommendations to specific users. We hope it will develop into the best **digital reading management tool!**
 
-Please note that this sample implementation from Assignment 1 contains a more comprehensive superset of tests compared with what we had as hidden tests on Coderunner. 
-Your domain model implementation may have to be extended to meet all test cases in the sample implementation, but you may also decide to remove or modify test cases as it suits you. 
-From here on you can choose if you want to use the provided domain model or your implementation, just make sure your chosen set of test cases always work with your implementation.
+User can use the web app to realize the entire process of reading management: choosing book →  manage favourite book list → add book to read list → compare with other user to stimulate the reading passion → review books.
 
+We will continuous develop the web app in the future.
+
+l will introduce the features of each unit separately in _**Report.pdf**_.
 
 ## Python version
 
@@ -32,9 +35,20 @@ When using PyCharm for requirements installation, set the virtual environment us
 
 ## Testing with the pytest unit tests
 
+```shell
+$ python -m pytest -v tests
+```
+
 After you have configured pytest as the testing tool for PyCharm (File - Settings - Tools - Python Integrated Tools - Testing), you can then run tests from within PyCharm by right-clicking the tests folder and selecting "Run pytest in tests".
 
 Alternatively, from a terminal in the root folder of the project, you can also call 'python -m pytest tests' to run all the tests. PyCharm also provides a built-in terminal, which uses the configured virtual environment. 
+
+## Test with showing the variable content
+I use the test_blueprint to debug. It can show specific variables' content to debug.
+
+The content will be shown in [http://127.0.0.1:5000/test](http://127.0.0.1:5000/test)
+
+We can call `get_test_content(content)` to transfer parameters
 
 
 ## Execution of the web application
