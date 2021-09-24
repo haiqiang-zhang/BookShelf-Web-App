@@ -125,8 +125,6 @@ def test_read_book(client,auth):
 
 
 def test_search_book(client):
-
-
     response = client.post(
         '/search',
         data={'select': "Release Year", 'search_content': "2016"}
