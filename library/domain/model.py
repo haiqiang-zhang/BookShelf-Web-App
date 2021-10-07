@@ -6,11 +6,21 @@ class Publisher:
 
     def __init__(self, publisher_name: str):
         # This makes sure the setter is called here in the initializer/constructor as well.
-        self.name = publisher_name
+        self.__name = publisher_name
+
+        self.__books = []
 
     @property
     def name(self) -> str:
         return self.__name
+
+    @property
+    def books(self) -> List['Book']:
+        return self.__books
+
+    def add_book(self, book):
+        if isinstance(book, Book):
+            self.__books.append(book)
 
     @name.setter
     def name(self, publisher_name: str):
@@ -48,11 +58,13 @@ class Author:
         self.__unique_id = author_id
 
         # Uses the attribute setter method.
-        self.full_name = author_full_name
+        self.__full_name = author_full_name
 
         # Initialize author colleagues data structure with empty set.
         # We use a set so each unique author is only represented once.
         self.__authors_this_one_has_worked_with = set()
+
+        self.__author_books = []
 
     @property
     def unique_id(self) -> int:
@@ -61,6 +73,10 @@ class Author:
     @property
     def full_name(self) -> str:
         return self.__full_name
+
+    @property
+    def author_books(self) -> List['Book']:
+        return self.__author_books
 
     @full_name.setter
     def full_name(self, author_full_name: str):
@@ -120,11 +136,29 @@ class Book:
         self.__image_url = ""
         self.__rating = 0
         self.__rating_count = 0
-
+        self.__read_list_user = []
+        self.__favourite_list_user = []
 
     @property
     def reviews(self):
         return self.__reviews
+
+    @property
+    def read_list_user(self):
+        return self.__read_list_user
+
+    def add_read_list_user(self, user: 'User'):
+        if isinstance(user, User):
+            self.__read_list_user.append(user)
+
+    @property
+    def favourite_list_user(self):
+        return self.__favourite_list_user
+
+    def add_favourite_list_user(self, user: 'User'):
+        if isinstance(user, User):
+            self.__favourite_list_user.append(user)
+
 
     @property
     def book_id(self) -> int:
@@ -487,6 +521,7 @@ class Tag:
         self.__tag_name: str = tag_name
         self.__tagged_books: List[Book] = list()
         self.__size = 0
+        self.__user = []
 
     @property
     def size(self):
@@ -502,6 +537,15 @@ class Tag:
     @property
     def tagged_books(self) -> List[Book]:
         return self.__tagged_books
+
+
+    @property
+    def user(self):
+        return self.__user
+
+    def add_user(self, user:User):
+        if isinstance(user, User):
+            self.__user.append(user)
 
     @property
     def number_of_tagged_books(self) -> int:

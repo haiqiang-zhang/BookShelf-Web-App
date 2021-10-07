@@ -28,7 +28,7 @@ def user_homepage():
     form = TagForm()
     form.tag_select.choices = services.get_tag_choice(repo_instance, user)
     if form.validate_on_submit():
-        tag = repo_instance.get_tag_by_name(form.tag_select.data)
+        tag = repo_instance.get_tag(form.tag_select.data)
         user.tags.append(tag)
         return redirect(url_for("user_homepage_bp.user_homepage"))
 
@@ -48,7 +48,7 @@ def user_homepage():
 @login_required
 def delete_tag():
     tag_name = request.args.get("tag_name")
-    tag = repo_instance.get_tag_by_name(tag_name)
+    tag = repo_instance.get_tag(tag_name)
     user = repo_instance.get_user(session['user_name'])
     user.tags.remove(tag)
     return redirect(url_for("user_homepage_bp.user_homepage"))

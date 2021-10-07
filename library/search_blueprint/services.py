@@ -4,7 +4,10 @@ from library.adapters.repository import AbstractRepository
 from library.adapters.memory_repository import get_book_by_id_and_given_list, get_books_by_title_and_given_list,get_books_by_author_and_given_list,get_books_by_year_and_given_list
 
 def get_search_books(request_search_scope:str, repo_instance:AbstractRepository):
-
+    if request_search_scope is None:
+        list_book = "books_list"
+        scope_text = "All Books"
+        return list_book, scope_text
     if "/books_list" in request_search_scope:
         list_book = "books_list"
         scope_text = "All Books"

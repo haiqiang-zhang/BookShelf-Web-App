@@ -2,10 +2,7 @@ import json
 from typing import List
 
 from library.domain.model import Publisher, Author, Book, Tag
-import library.adapters.repository as repo
 import library.domain.model
-
-from library.adapters.repository import repo_instance
 
 
 
@@ -42,9 +39,22 @@ class BooksJSONReader:
         books_json = self.read_books_file()
 
 
+        for author_json in authors_json:
+            author = Author(int(author_json['author_id']), author_json['name'])
+            if author not in repo.get_authors():
+                repo.add_author(author)
+
+
+
+
+
         for book_json in books_json:
             book_instance = Book(int(book_json['book_id']), book_json['title'])
-            book_instance.publisher = Publisher(book_json['publisher'])
+            if book_json['publisher'] != "":
+                publisher_instance = Publisher(book_json['publisher'])
+                book_instance.publisher = publisher_instance
+                if publisher_instance not in repo.get_publishers():
+                    repo.add_publisher(publisher_instance)
             if book_json['publication_year'] != "":
                 book_instance.release_year = int(book_json['publication_year'])
             if book_json['image_url'] != "":
@@ -59,7 +69,6 @@ class BooksJSONReader:
                 book_instance.num_pages = int(book_json['num_pages'])
 
 
-
             #add book tag
             for each_element in book_json['popular_shelves']:
                 for each_tag in repo.get_tags():
@@ -69,19 +78,10 @@ class BooksJSONReader:
                             each_tag.update_size()
                             book_instance.tags.append(each_tag)
 
-
-
             # extract the author ids:
             list_of_authors_ids = book_json['authors']
-            for author_id in list_of_authors_ids:
+            for author_json in list_of_authors_ids:
+                if repo.get_author(int(author_json['author_id'])) is not None:
+                    book_instance.add_author(repo.get_author(int(author_json['author_id'])))
 
-                numerical_id = int(author_id['author_id'])
-                # We assume book authors are available in the authors file,
-                # otherwise more complex handling is required.
-                author_name = None
-                for author_json in authors_json:
-                    if int(author_json['author_id']) == numerical_id:
-                        author_name = author_json['name']
-                if author_name != None:
-                    book_instance.add_author(Author(numerical_id, author_name))
             self.__dataset_of_books.append(book_instance)

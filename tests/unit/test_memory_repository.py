@@ -84,28 +84,6 @@ def test_repository_can_retrieve_tags(in_memory_repo):
 
 
 
-def test_repository_can_get_books_by_ids(in_memory_repo):
-    books = in_memory_repo.get_books_by_id([25742454, 13571772, 11827783])
-
-    assert len(books) == 3
-    assert books[0].title == "The Switchblade Mamma"
-    assert books[1].title == "Captain America: Winter Soldier (The Ultimate Graphic Novels Collection: Publication Order, #7)"
-    assert books[2].title == "Sherlock Holmes: Year One"
-
-
-def test_repository_does_not_retrieve_books_for_non_existent_id(in_memory_repo):
-    book = in_memory_repo.get_books_by_id([25742454, 9])
-
-    assert len(book) == 1
-    assert book[0].title == "The Switchblade Mamma"
-
-
-def test_repository_returns_an_empty_list_for_non_existent_ids(in_memory_repo):
-    book = in_memory_repo.get_books_by_id([0, 9])
-
-    assert len(book) == 0
-
-
 def test_repository_returns_books_ids_for_existing_tag(in_memory_repo):
     book_ids = in_memory_repo.get_books_ids_for_tag('Action')
 

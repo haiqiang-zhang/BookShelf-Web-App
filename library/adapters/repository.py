@@ -102,13 +102,6 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
 
-    @abc.abstractmethod
-    def get_books_by_id(self, id_list):
-        """ Returns a list of Articles, whose ids match those in id_list, from the repository.
-
-        If there are no matches, this method returns an empty list.
-        """
-        raise NotImplementedError
 
     @abc.abstractmethod
     def get_books_ids_for_tag(self, tag_name: str):
@@ -128,9 +121,6 @@ class AbstractRepository(abc.ABC):
         """ Returns the Tags stored in the repository. """
         raise NotImplementedError
 
-    @abc.abstractmethod
-    def get_tag_by_name(self, name: str):
-        raise NotImplementedError
 
     @abc.abstractmethod
     def add_review(self, review: Review):
@@ -152,6 +142,29 @@ class AbstractRepository(abc.ABC):
     @abc.abstractmethod
     def get_tag(self, tag_name):
         raise NotImplementedError
+
+    @abc.abstractmethod
+    def add_publisher(self, publisher: Publisher):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_publishers(self):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def add_author(self, author:Author):
+        raise NotImplementedError
+
+
+
+    @abc.abstractmethod
+    def get_authors(self):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_author(self, id: int):
+        raise NotImplementedError
+
 
 
 

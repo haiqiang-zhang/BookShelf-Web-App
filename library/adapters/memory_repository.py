@@ -22,6 +22,7 @@ class MemoryRepository(AbstractRepository):
         self.__users = list()
         self.__reviews = list()
         self.__author = list()
+        self.__publisher = list()
 
     def add_user(self, user: User):
         self.__users.append(user)
@@ -71,13 +72,6 @@ class MemoryRepository(AbstractRepository):
     def get_number_of_books(self) -> int:
         return len(self.__books)
 
-    def get_books_by_id(self, id_list):
-        # Strip out any ids in id_list that don't represent Article ids in the repository.
-        existing_ids = [id for id in id_list if id in self.__books_index]
-
-        # Fetch the Books.
-        books = [self.__books_index[id] for id in existing_ids]
-        return books
 
     def get_books_by_index(self, index: List[int]) -> List[Book]:
         return [self.__books[index] for index in index]
@@ -138,11 +132,7 @@ class MemoryRepository(AbstractRepository):
     def get_tags(self) -> List[Tag]:
         return self.__tags
 
-    def get_tag_by_name(self, name: str):
-        for tag in self.__tags:
-            if tag.tag_name == name:
-                return tag
-        return None
+
 
     def add_review(self, review: Review):
         # call parent class first, add_comment relies on implementation of code common to all derived classes
@@ -152,12 +142,27 @@ class MemoryRepository(AbstractRepository):
     def get_reviews(self):
         return self.__reviews
 
-    # Helper method to return article index.
-    def book_index(self, book: Book):
-        index = bisect_left(self.__books, book)
-        if index != len(self.__books) and self.__books[index].book_id == book.book_id:
-            return index
-        raise ValueError
+    def add_publisher(self, publisher:Publisher):
+        self.__publisher.append(publisher)
+
+    def get_publishers(self):
+        return self.__publisher
+
+    def add_author(self, author: Author):
+        self.__author.append(author)
+
+    def get_authors(self):
+        return self.__author
+
+    def get_author(self, id: int):
+        for author in self.__author:
+            if author.unique_id == id:
+                return author
+        return None
+
+
+
+
 
 
 def read_csv_file(filename: str):
