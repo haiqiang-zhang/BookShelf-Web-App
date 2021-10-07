@@ -123,6 +123,7 @@ def read_a_book():
     #tags = repo_instance.get_tags()
     if book_instance not in user_instance.read_books:
         user_instance.read_a_book(book_instance)
+        repo_instance.commit()
         message="Succeed!"
     else:
         message="You have read this book!"
@@ -159,6 +160,7 @@ def favourite_a_book():
     book_instance, user_instance = services.read_a_book_services(repo_instance, user_name, fav_book_id)
     if book_instance not in user_instance.favourite:
         user_instance.favourite.append(book_instance)
+        repo_instance.commit()
         services.auto_add_tag(user_instance, repo_instance)
         message= "Succeed!"
     else:

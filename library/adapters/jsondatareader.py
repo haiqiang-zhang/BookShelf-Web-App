@@ -76,7 +76,7 @@ class BooksJSONReader:
                         if (book_instance not in each_tag.tagged_books) and (each_tag not in book_instance.tags):
                             each_tag.add_book(book_instance)
                             each_tag.update_size()
-                            book_instance.tags.append(each_tag)
+                            # book_instance.tags.append(each_tag)
 
             # extract the author ids:
             list_of_authors_ids = book_json['authors']

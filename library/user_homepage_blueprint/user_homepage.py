@@ -29,7 +29,7 @@ def user_homepage():
     form.tag_select.choices = services.get_tag_choice(repo_instance, user)
     if form.validate_on_submit():
         tag = repo_instance.get_tag(form.tag_select.data)
-        user.tags.append(tag)
+        services.add_tag(user, tag, repo_instance)
         return redirect(url_for("user_homepage_bp.user_homepage"))
 
     tags = services.get_tags(user)
@@ -51,6 +51,7 @@ def delete_tag():
     tag = repo_instance.get_tag(tag_name)
     user = repo_instance.get_user(session['user_name'])
     user.tags.remove(tag)
+    repo_instance.commit()
     return redirect(url_for("user_homepage_bp.user_homepage"))
 
 class TagForm(FlaskForm):

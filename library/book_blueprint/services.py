@@ -101,18 +101,21 @@ def auto_add_tag(user:User, repo_instance:AbstractRepository):
     for t_name in tag_dict:
         if tag_dict[t_name] >= 3:
             user.add_a_tag(repo_instance.get_tag(t_name))
+            repo_instance.commit()
 
 
 def delete_fav_book_service(book_id:int, user_name:str, repo_instance:AbstractRepository):
     book = repo_instance.get_book(book_id)
     user = repo_instance.get_user(user_name)
     user.favourite.remove(book)
+    repo_instance.commit()
 
 
 def delete_read_book_service(book_id:int, user_name:str, repo_instance:AbstractRepository):
     book = repo_instance.get_book(book_id)
     user = repo_instance.get_user(user_name)
     user.read_books.remove(book)
+    repo_instance.commit()
 
 
 

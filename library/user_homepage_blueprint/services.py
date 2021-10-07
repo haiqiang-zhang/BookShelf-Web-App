@@ -14,3 +14,10 @@ def get_tag_choice(repo_instance:AbstractRepository,user:User):
 def get_tags(user:User):
     user_tag = user.tags
     return user_tag
+
+def add_tag(user:User, tag:Tag, repo_instance:AbstractRepository):
+    user.tags.append(tag)
+    repo_instance.commit()
+
+
+

@@ -165,7 +165,9 @@ class AbstractRepository(abc.ABC):
     def get_author(self, id: int):
         raise NotImplementedError
 
-
+    @abc.abstractmethod
+    def commit(self):
+        raise NotImplementedError
 
 
 

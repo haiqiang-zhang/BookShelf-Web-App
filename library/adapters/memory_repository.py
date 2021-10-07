@@ -160,6 +160,9 @@ class MemoryRepository(AbstractRepository):
                 return author
         return None
 
+    def commit(self):
+        pass
+
 
 
 

@@ -186,3 +186,7 @@ class SqlAlchemyRepository(AbstractRepository):
             pass
         return author
 
+    def commit(self):
+        with self._session_cm as scm:
+            scm.commit()
+
