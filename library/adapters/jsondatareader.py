@@ -41,7 +41,7 @@ class BooksJSONReader:
 
         for author_json in authors_json:
             author = Author(int(author_json['author_id']), author_json['name'])
-            if author not in repo.get_authors():
+            if repo.get_author(int(author_json['author_id'])) is None:
                 repo.add_author(author)
 
 
@@ -53,7 +53,7 @@ class BooksJSONReader:
             if book_json['publisher'] != "":
                 publisher_instance = Publisher(book_json['publisher'])
                 book_instance.publisher = publisher_instance
-                if publisher_instance not in repo.get_publishers():
+                if publisher_instance not in [publisher_temp.name for publisher_temp in repo.get_publishers()]:
                     repo.add_publisher(publisher_instance)
             if book_json['publication_year'] != "":
                 book_instance.release_year = int(book_json['publication_year'])
