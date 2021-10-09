@@ -55,7 +55,6 @@ def create_app(test_config = None):
 
         # We create a comparatively simple SQLite database, which is based on a single file (see .env for URI).
         # For example the file database could be located locally and relative to the application in covid-19.db,
-        # leading to a URI of "sqlite:///covid-19.db".
         # Note that create_engine does not establish any actual DB connection directly!
         database_echo = app.config['SQLALCHEMY_ECHO']
         # Please do not change the settings for connect_args and poolclass!
