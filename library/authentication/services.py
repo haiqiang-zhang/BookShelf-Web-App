@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from library.adapters.repository import AbstractRepository
-from library.adapters.memory_repository import write_user_to_csv
+# from library.adapters.memory_repository import write_user_to_csv
 from library.domain.model import User
 
 
@@ -25,11 +25,10 @@ def add_user(user_name: str, password: str, repo: AbstractRepository):
 
     # Encrypt password so that the database doesn't store passwords 'in the clear'.
     password_hash = generate_password_hash(password)
-
     # Create and store the new User, with password encrypted.
     user = User(user_name, password_hash)
     repo.add_user(user)
-    write_user_to_csv(user_name,password)
+
 
 
 

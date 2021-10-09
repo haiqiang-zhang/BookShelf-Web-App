@@ -34,19 +34,14 @@ class BooksJSONReader:
                 authors_json.append(author_entry)
         return authors_json
 
-    def read_json_files(self, repo):
+    def read_json_files(self, repo, data_mode):
         authors_json = self.read_authors_file()
         books_json = self.read_books_file()
-
 
         for author_json in authors_json:
             author = Author(int(author_json['author_id']), author_json['name'])
             if repo.get_author(int(author_json['author_id'])) is None:
                 repo.add_author(author)
-
-
-
-
 
         for book_json in books_json:
             book_instance = Book(int(book_json['book_id']), book_json['title'])
@@ -68,7 +63,6 @@ class BooksJSONReader:
             if book_json['num_pages'] != "":
                 book_instance.num_pages = int(book_json['num_pages'])
 
-
             #add book tag
             for each_element in book_json['popular_shelves']:
                 for each_tag in repo.get_tags():
@@ -76,7 +70,8 @@ class BooksJSONReader:
                         if (book_instance not in each_tag.tagged_books) and (each_tag not in book_instance.tags):
                             each_tag.add_book(book_instance)
                             each_tag.update_size()
-                            # book_instance.tags.append(each_tag)
+                            if data_mode == False:
+                                book_instance.tags.append(each_tag)
 
             # extract the author ids:
             list_of_authors_ids = book_json['authors']

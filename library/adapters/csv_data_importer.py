@@ -25,11 +25,11 @@ def read_csv_file(filename: str):
 
 
 
-def load_books_and_author(data_path: Path, repo: AbstractRepository):
+def load_books_and_author(data_path: Path, repo: AbstractRepository, database_mode):
     book_path = str(Path(data_path) / "comic_books_excerpt.json")
     author_path = str(Path(data_path) / "book_authors_excerpt.json")
     JSONReader = BooksJSONReader(book_path, author_path)
-    JSONReader.read_json_files(repo)
+    JSONReader.read_json_files(repo, database_mode)
     for book in JSONReader.dataset_of_books:
         repo.add_book(book)
 

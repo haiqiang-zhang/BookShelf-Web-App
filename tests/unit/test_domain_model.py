@@ -420,7 +420,7 @@ def read_books_and_authors():
     path_to_books_file = str(root_folder / data_folder / books_file_name)
     path_to_authors_file = str(root_folder / data_folder / authors_file_name)
     reader = BooksJSONReader(path_to_books_file, path_to_authors_file)
-    reader.read_json_files(repo)
+    reader.read_json_files(repo, data_mode=False)
     return reader.dataset_of_books
 
 

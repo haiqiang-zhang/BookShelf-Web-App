@@ -6,7 +6,7 @@ class Publisher:
 
     def __init__(self, publisher_name: str):
         # This makes sure the setter is called here in the initializer/constructor as well.
-        self.__name = publisher_name
+        self.name = publisher_name
 
         self.__books = []
 
@@ -58,7 +58,7 @@ class Author:
         self.__unique_id = author_id
 
         # Uses the attribute setter method.
-        self.__full_name = author_full_name
+        self.full_name = author_full_name
 
         # Initialize author colleagues data structure with empty set.
         # We use a set so each unique author is only represented once.

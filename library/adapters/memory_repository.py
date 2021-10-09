@@ -23,9 +23,14 @@ class MemoryRepository(AbstractRepository):
         self.__reviews = list()
         self.__author = list()
         self.__publisher = list()
+        # self.__data_path = None
+
+    # def conf_data_path(self, path):
+    #     self.__data_path = path
 
     def add_user(self, user: User):
         self.__users.append(user)
+        # write_user_to_csv(user.user_name, user.password, self.__data_path)
 
     def get_user(self, user_name) -> User:
         return next((user for user in self.__users if user.user_name == user_name), None)
@@ -278,23 +283,26 @@ def get_books_by_year_and_given_list(list_book: List[Book], release_year: int):
     return matching_books
 
 
-def write_user_to_csv(user_name, password):
-    data_path = Path('library') / 'adapters' / 'data'
-    users_filename = str(Path(data_path) / "users.csv")
-    row_list = []
-    user_name_list = []
-    for row in read_csv_file(users_filename):
-        row_list = row
-        user_name_list.append(row[1])
-
-    read_csv_file(users_filename).close()
-    if user_name in user_name_list:
-        return
-
-    last_id = int(row_list[0])
-    with open(users_filename, 'a+', encoding='utf-8-sig', newline='') as infile:
-        f_csv = csv.writer(infile)
-        f_csv.writerow([last_id + 1, user_name, password, ""])
+# def write_user_to_csv(user_name, password, data_path):
+#     if data_path is None:
+#         data_path = Path('library') / 'adapters' / 'data'
+#         users_filename = str(Path(data_path) / "users.csv")
+#     else:
+#         users_filename = str(Path(data_path) / "users.csv")
+#     row_list = []
+#     user_name_list = []
+#     for row in read_csv_file(users_filename):
+#         row_list = row
+#         user_name_list.append(row[1])
+#
+#     read_csv_file(users_filename).close()
+#     if user_name in user_name_list:
+#         return
+#
+#     last_id = int(row_list[0])
+#     with open(users_filename, 'a+', encoding='utf-8-sig', newline='') as infile:
+#         f_csv = csv.writer(infile)
+#         f_csv.writerow([last_id + 1, user_name, password, ""])
 
 
 def count_fav_tag(user_instance: User):

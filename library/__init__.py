@@ -44,8 +44,10 @@ def create_app(test_config = None):
     if app.config['REPOSITORY'] == 'memory':
         # Create the MemoryRepository implementation for a memory-based repository.
         repo.repo_instance = memory_repository.MemoryRepository()
+        # repo.repo_instance.conf_data_path(data_path)
         # fill the content of the repository from the provided csv files (has to be done every time we start app!)
-        repository_populate.populate(data_path, repo.repo_instance)
+        database_mode = False
+        repository_populate.populate(data_path, repo.repo_instance, database_mode)
 
     elif app.config['REPOSITORY'] == 'database':
         # Configure database.
@@ -65,6 +67,7 @@ def create_app(test_config = None):
         # Create the SQLAlchemy DatabaseRepository instance for an sqlite3-based repository.
         repo.repo_instance = database_repository.SqlAlchemyRepository(session_factory)
 
+
         if app.config['TESTING'] == 'True' or len(database_engine.table_names()) == 0:
             print("REPOPULATING DATABASE...")
             # For testing, or first-time use of the web application, reinitialise the database.
@@ -76,7 +79,8 @@ def create_app(test_config = None):
             # Generate mappings that map domain model classes to the database tables.
             map_model_to_tables()
 
-            repository_populate.populate(data_path, repo.repo_instance)
+            database_mode = True
+            repository_populate.populate(data_path, repo.repo_instance, database_mode)
             print("REPOPULATING DATABASE... FINISHED")
 
         else:
