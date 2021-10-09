@@ -37,6 +37,7 @@ When using PyCharm for requirements installation, set the virtual environment us
 
 ```shell
 $ python -m pytest -v tests
+$ python -m pytest -v tests_db
 ```
 
 After you have configured pytest as the testing tool for PyCharm (File - Settings - Tools - Python Integrated Tools - Testing), you can then run tests from within PyCharm by right-clicking the tests folder and selecting "Run pytest in tests".
