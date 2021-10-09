@@ -91,9 +91,9 @@ class SqlAlchemyRepository(AbstractRepository):
         return self._session_cm.session.query(Book).all()
 
     def get_books_by_release_year(self, release_year: int) -> List[Book]:
-        matching_articles = self._session_cm.session.query(Book).filter(Book._Book__release_year == release_year).all()
+        matching_books = self._session_cm.session.query(Book).filter(Book._Book__release_year == release_year).all()
 
-        return matching_articles
+        return matching_books
 
     def get_number_of_books(self) -> int:
         return self._session_cm.session.query(Book).count()
@@ -102,26 +102,26 @@ class SqlAlchemyRepository(AbstractRepository):
         return [self._session_cm.session.query(Book).all()[index] for index in index]
 
     def get_books_by_authors(self, author_input: str) -> List[Book]:
-        author_input = author_input.lower()
-        matching_articles = self._session_cm.session.query(Book)\
-            .filter(Book._Book__authors.match("%{}%".format(author_input))).all()
-
-        return matching_articles
+        matching_books = []
+        for author in self.get_authors():
+            if author_input.lower() in author.full_name.lower():
+                matching_books += author.author_books
+        return matching_books
 
     def get_books_by_publisher(self, publisher: Publisher) -> List[Book]:
-        matching_articles = list()
+        matching_books = list()
         try:
-            matching_articles = publisher.books
+            matching_books = publisher.books
         except KeyError:
             pass
-        return matching_articles
+        return matching_books
 
     def get_books_by_title(self, title: str) -> List[Book]:
         title = title.lower()
-        matching_articles = self._session_cm.session.query(Book) \
-            .filter(Book._Book__title.match("%{}%".format(title))).all()
+        matching_books = self._session_cm.session.query(Book) \
+            .filter(Book._Book__title.like("%{}%".format(title))).all()
 
-        return matching_articles
+        return matching_books
 
     def get_tag(self, tag_name):
         tag = None
@@ -153,6 +153,7 @@ class SqlAlchemyRepository(AbstractRepository):
 
 
     def add_review(self, review: Review):
+        super().add_review(review)
         with self._session_cm as scm:
             scm.session.add(review)
             scm.commit()
@@ -174,7 +175,7 @@ class SqlAlchemyRepository(AbstractRepository):
             scm.session.add(author)
             scm.commit()
 
-    def get_authors(self):
+    def get_authors(self) -> List[Author]:
         return self._session_cm.session.query(Author).all()
 
 

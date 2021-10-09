@@ -53,7 +53,7 @@ class BooksJSONReader:
             if book_json['publisher'] != "":
                 publisher_instance = Publisher(book_json['publisher'])
                 book_instance.publisher = publisher_instance
-                if publisher_instance not in [publisher_temp.name for publisher_temp in repo.get_publishers()]:
+                if book_json['publisher'] not in [publisher_temp.name for publisher_temp in repo.get_publishers()]:
                     repo.add_publisher(publisher_instance)
             if book_json['publication_year'] != "":
                 book_instance.release_year = int(book_json['publication_year'])
