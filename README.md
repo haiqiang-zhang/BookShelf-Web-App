@@ -1,4 +1,4 @@
-# "Bookshelf" Web App
+# "Bookshelf" Web App (DB Edition)
 ### Team: NJUST Team1
 ### Author: Haiqiang Zhang & Jinhua Fan
 
@@ -14,6 +14,8 @@ User can use the web app to realize the entire process of reading management: ch
 We will continuous develop the web app in the future.
 
 l will introduce the features of each unit separately in _**Report.pdf**_.
+
+Now the web app support database by SQLite.
 
 ## Python version
 
@@ -32,6 +34,31 @@ $ pip install -r requirements.txt
 
 When using PyCharm for requirements installation, set the virtual environment using 'File'->'Settings' and select your project from the left menu. Select 'Project Interpreter', click on the gearwheel button and select 'Add'. Click the 'Existing environment' radio button to select the virtual environment. 
 
+## Configuration
+
+The *compsci235-assignment2-njust-team1/.env* file contains variable settings. They are set with appropriate values.
+
+* `FLASK_APP`: Entry point of the application (should always be `wsgi.py`).
+* `FLASK_ENV`: The environment in which to run the application (either `development` or `production`).
+* `SECRET_KEY`: Secret key used to encrypt session data.
+* `TESTING`: Set to False for running the application. Overridden and set to True automatically when testing the application.
+* `WTF_CSRF_SECRET_KEY`: Secret key used by the WTForm library.
+
+These settings are for the database version of the code:
+
+* `SQLALCHEMY_DATABASE_URI`: The URI of the SQlite database, by default it will be created in the root directory of the project.
+* `SQLALCHEMY_ECHO`: If this flag is set to True, SQLAlchemy will print the SQL statements it uses internally to interact with the tables. 
+* `REPOSITORY`: This flag allows us to easily switch between using the Memory repository or the SQLAlchemyDatabase repository.
+
+## Execution of the web application
+
+**Running the Flask application**
+
+From the project directory, and within the activated virtual environment (see *venv\Scripts\activate* above):
+
+````shell
+$ flask run
+```` 
 
 ## Testing with the pytest unit tests
 
@@ -51,16 +78,6 @@ The content will be shown in [http://127.0.0.1:5000/test](http://127.0.0.1:5000/
 
 We can call `get_test_content(content)` to transfer parameters
 
-
-## Execution of the web application
-
-**Running the Flask application**
-
-From the project directory, and within the activated virtual environment (see *venv\Scripts\activate* above):
-
-````shell
-$ flask run
-```` 
 
 ## Data sources 
 
