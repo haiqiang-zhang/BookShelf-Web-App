@@ -123,15 +123,11 @@ def test_repository_can_get_books_by_index(session_factory):
 
     assert books == books_list
 
-
-
 def test_repository_can_get_books_by_authors(session_factory):
     repo = SqlAlchemyRepository(session_factory)
 
     books = repo.get_books_by_authors("Yuu Asami")
     assert len(books) == 1
-
-
 
 def test_repository_can_get_books_by_publisher(session_factory):
     repo = SqlAlchemyRepository(session_factory)
@@ -140,8 +136,6 @@ def test_repository_can_get_books_by_publisher(session_factory):
     books = repo.get_books_by_publisher(publisher)
 
     assert books == []
-
-
 
 def test_repository_can_get_books_by_title(session_factory):
     repo = SqlAlchemyRepository(session_factory)
@@ -167,14 +161,12 @@ def test_repository_can_retrieve_tags(session_factory):
     assert tag_one.size == 4
     assert tag_two.size == 5
 
-
 def test_repository_can_get_books_ids_for_tag(session_factory):
     repo = SqlAlchemyRepository(session_factory)
 
     books = repo.get_books_ids_for_tag("Action")
 
     assert books == [27036536, 23272155, 11827783, 18955715]
-
 
 def test_repository_can_add_tag(session_factory):
     repo = SqlAlchemyRepository(session_factory)
@@ -200,7 +192,6 @@ def test_repository_can_add_review(session_factory):
 
     assert review in repo.get_reviews()
 
-
 def test_repository_does_not_add_a_review_without_a_user(session_factory):
     repo = SqlAlchemyRepository(session_factory)
 
@@ -210,15 +201,12 @@ def test_repository_does_not_add_a_review_without_a_user(session_factory):
     with pytest.raises(RepositoryException):
         repo.add_review(review)
 
-
-
 def test_repository_can_get_reviews(session_factory):
     repo = SqlAlchemyRepository(session_factory)
 
     reviews = repo.get_reviews()
 
     assert len(reviews) != 0
-
 
 
 
@@ -235,6 +223,7 @@ def test_repository_publisher(session_factory):
     size2 = len(repo.get_publishers())
 
     assert size1 != size2
+
 
 
 
