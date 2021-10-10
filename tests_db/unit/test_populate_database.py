@@ -91,7 +91,6 @@ def test_database_populate_select_all_books(database_engine):
 
         all_books = []
         for row in result:
-            print(row)
             all_books.append((row['book_id'], row['title']))
 
         nr_articles = len(all_books)
