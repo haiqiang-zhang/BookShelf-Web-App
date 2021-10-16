@@ -17,6 +17,11 @@ l will introduce the features of each unit separately in _**Report.pdf**_.
 
 Now the web app support database by SQLite.
 
+## Website
+I have deployed the web app to a server. You can access the website directly to have fun.
+The Website is: http://81.68.225.48:5000/
+
+
 ## Python version
 
 Please use Python version 3.6 or newer versions for development. Some of the depending libraries of our web application do not support Python versions below 3.6!
@@ -25,10 +30,22 @@ Please use Python version 3.6 or newer versions for development. Some of the dep
 ## Installation
 
 **Installation via requirements.txt**
-
+###Linux
 ```shell
-$ py -3 -m venv venv
-$ venv\Scripts\activate
+$ python3 -m venv venv
+$ source ./venv/bin/activate
+$ pip install -r requirements.txt
+```
+###MacOS
+```shell
+$ python3 -m venv venv
+$ source ./venv/bin/activate
+$ pip install -r requirements.txt
+```
+###Windows
+```shell
+$ python3 -m venv venv
+$ \venv\bin\activate
 $ pip install -r requirements.txt
 ```
 
@@ -59,6 +76,14 @@ From the project directory, and within the activated virtual environment (see *v
 ````shell
 $ flask run
 ```` 
+
+**Externally Visible Server**
+
+If you have the debugger disabled or trust the users on your network, you can make the server publicly available simply by adding `--host=0.0.0.0` to the command line:
+```shell
+$ flask run --host=0.0.0.0
+```
+
 
 ## Testing with the pytest unit tests
 
