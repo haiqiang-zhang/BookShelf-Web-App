@@ -5,7 +5,7 @@ function read_book(book_id){
                 window.location.href = response.url;
             }
             else {
-                alert(response.text());
+                response.text().then(message => alert(message))
             }
     })
 }
@@ -17,7 +17,7 @@ function favourite_book(book_id){
                 window.location.href = response.url;
             }
             else {
-                alert(response.text());
+                response.text().then(message => alert(message))
             }
     })
 }
