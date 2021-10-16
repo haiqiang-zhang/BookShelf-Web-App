@@ -65,11 +65,11 @@ def login():
             return redirect(url_for('home_bp.home'))
 
         except services.UnknownUserException:
-            # User name not known to the system, set a suitable error message.
+            # User name not known to the system, set a suitable error book.
             user_name_not_recognised = 'User name not recognised - please supply another'
 
         except services.AuthenticationException:
-            # Authentication failed, set a suitable error message.
+            # Authentication failed, set a suitable error book.
             password_does_not_match_user_name = 'Password does not match supplied user name - please check and try again'
 
     # For a GET or a failed POST, return the Login Web page.

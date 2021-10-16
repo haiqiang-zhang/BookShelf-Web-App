@@ -130,11 +130,11 @@ def read_a_book():
     return message
 
     # if "books_list" not in request.referrer and "book_type_list" not in request.referrer:
-    #     return redirect(url_for('home_bp.home', message=message, book_id=read_book_id))
+    #     return redirect(url_for('home_bp.home', book=book, book_id=read_book_id))
     # else:
     #     return render_template(
     #         'books_list.html',
-    #         message=message,
+    #         book=book,
     #         list_title="All Books",
     #         tags=tags,
     #         books=books,
@@ -169,11 +169,11 @@ def favourite_a_book():
     return message
 
     # if "books_list" not in request.referrer:
-    #     return redirect(url_for('home_bp.home', message=message, book_id=fav_book_id))
+    #     return redirect(url_for('home_bp.home', book=book, book_id=fav_book_id))
     # else:
     #     return render_template(
     #         'books_list.html',
-    #         message=message,
+    #         book=book,
     #         list_title="All Books",
     #         books=books,
     #         pages=pages,

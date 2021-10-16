@@ -37,7 +37,7 @@ def home():
                                authors=rec_book.authors,
                                page_title="Personal Recommendation")
 
-    # message = request.args.get("message")
+    # book = request.args.get("book")
     # book_id = request.args.get("book_id")
 
     some_book = services.get_random_books(1, repo_instance)
@@ -51,7 +51,7 @@ def home():
     #                        releaseYear=book.release_year,
     #                        Desc=book.description,
     #                        book_id=book.book_id,
-    #                        message=message)
+    #                        book=book)
 
     return render_template('home.html',
                            image_url=some_book[0].image_url,

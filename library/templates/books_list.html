@@ -55,9 +55,9 @@
                     {% if url=="book_bp.books_list" or (url=="search_bp.search_result" and scope_text== "All Books") or url== "book_bp.book_type_list" %}
                         <td>
                         <div class="add_buttom">
-                            <a href="{{ url_for('book_bp.read_a_book', read_book_id=book.book_id) }}"> Read the
+                            <a onclick="read_book({{ book.book_id }});"> Read the
                                 Book </a>
-                            <a href="{{ url_for('book_bp.favourite_a_book', fav_book_id=book.book_id) }}"> Add to
+                            <a onclick="favourite_book({{ book.book_id }});"> Add to
                                 Favourite </a>
                         </div>
                     </td>

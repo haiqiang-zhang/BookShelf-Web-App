@@ -16,7 +16,7 @@ def test_register(client):
     assert response.headers['Location'] == 'http://localhost/authentication/login'
 
 
-@pytest.mark.parametrize(('user_name', 'password', 'message'), (
+@pytest.mark.parametrize(('user_name', 'password', 'book'), (
         ('', '', b'Your user name is required'),
         ('cj', '', b'Your user name is too short'),
         ('test', '', b'Your password is required'),
