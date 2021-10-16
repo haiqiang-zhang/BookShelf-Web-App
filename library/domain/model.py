@@ -159,7 +159,6 @@ class Book:
         if isinstance(user, User):
             self.__favourite_list_user.append(user)
 
-
     @property
     def book_id(self) -> int:
         return self.__book_id
@@ -179,19 +178,17 @@ class Book:
         else:
             raise ValueError
 
+    # def update_rating(self, rating):
+    #     self.__rating_count += 1
+    #     self.__rating += rating
 
-    def update_rating(self, rating):
-        self.__rating_count += 1
-        self.__rating += rating
-
-    @property
-    def get_average_rating(self):
-        return round(self.__rating / self.__rating_count)
+    # @property
+    # def get_average_rating(self):
+    #     return round(self.__rating / self.__rating_count)
 
     @property
     def release_year(self) -> int:
         return self.__release_year
-
 
     @release_year.setter
     def release_year(self, release_year: int):
@@ -207,7 +204,6 @@ class Book:
     @image_url.setter
     def image_url(self, url: str):
         self.__image_url = url
-
 
     @property
     def description(self) -> str:
@@ -298,12 +294,11 @@ class Book:
     def add_review(self, review: 'Review'):
         self.__reviews.append(review)
 
-    @property
-    def get_average_rating(self) -> float:
-        if self.__rating_count == 0:
-            return 0
-        return round(self.__rating / self.__rating_count)
-
+    # @property
+    # def get_average_rating(self) -> float:
+    #     if self.__rating_count == 0:
+    #         return 0
+    #     return round(self.__rating / self.__rating_count)
 
     def __repr__(self):
         return f'<Book {self.title}, book id = {self.book_id}>'
@@ -320,8 +315,6 @@ class Book:
         return hash(self.book_id)
 
 
-
-
 class User:
     def __init__(self, user_name: str, password: str):
         if user_name == "" or not isinstance(user_name, str):
@@ -336,8 +329,8 @@ class User:
 
         self.__read_books = []
         self.__reviews = []
-        self.__favourite:List[Book] = []
-        self.__pages_read = 0
+        self.__favourite: List[Book] = []
+        # self.__pages_read = 0
         self.__tags = []
 
     @property
@@ -349,11 +342,9 @@ class User:
         if tags not in self.__tags:
             self.__tags.append(tags)
 
-
-    def add_a_tag(self,tag):
+    def add_a_tag(self, tag):
         if tag not in self.__tags:
             self.__tags.append(tag)
-
 
     @property
     def user_name(self) -> str:
@@ -368,23 +359,26 @@ class User:
         return self.__read_books
 
     @read_books.setter
-    def read_books(self, read_list:List[Book]):
+    def read_books(self, read_list: List[Book]):
         self.__read_books = read_list
-
 
     @property
     def reviews(self) -> List['Review']:
         return self.__reviews
 
-    @property
-    def pages_read(self) -> int:
-        return self.__pages_read
+    # @property
+    # def pages_read(self) -> int:
+    #     return self.__pages_read
+
+    # @pages_read.setter
+    # def pages_read(self, value):
+    #     self.__pages_read = value
 
     def read_a_book(self, book: Book):
         if isinstance(book, Book):
             self.__read_books.append(book)
-            if book.num_pages is not None:
-                self.__pages_read += book.num_pages
+            # if book.num_pages is not None:
+            #     self.__pages_read += book.num_pages
 
     def add_review(self, review: 'Review'):
         if isinstance(review, Review):
@@ -414,9 +408,6 @@ class User:
         return hash(self.user_name)
 
 
-
-
-
 class Review:
 
     def __init__(self, book: Book, review_text: str, rating: int, user: User):
@@ -430,11 +421,10 @@ class Review:
         else:
             self.__review_text = "N/A"
 
-        if isinstance(rating, int) and rating >= 1 and rating <= 5:
+        if isinstance(rating, int) and 1 <= rating <= 5:
             self.__rating = rating
         else:
             raise ValueError
-
 
         if isinstance(user, User):
             self.__user = user
@@ -468,13 +458,10 @@ class Review:
             return False
 
         return other.book == self.book and other.review_text == self.review_text \
-               and other.rating == self.rating and other.timestamp == self.timestamp
+               and other.get_rating == self.get_rating and other.timestamp == self.timestamp
 
     def __repr__(self):
-        return f'<Review of book {self.book}, rating = {self.rating}, timestamp = {self.timestamp}>'
-
-
-
+        return f'<Review of book {self.book}, rating = {self.get_rating}, timestamp = {self.timestamp}>'
 
 
 class BooksInventory:
@@ -538,12 +525,11 @@ class Tag:
     def tagged_books(self) -> List[Book]:
         return self.__tagged_books
 
-
     @property
     def user(self):
         return self.__user
 
-    def add_user(self, user:User):
+    def add_user(self, user: User):
         if isinstance(user, User):
             self.__user.append(user)
 
@@ -563,14 +549,8 @@ class Tag:
         return other.tag_name == self.tag_name
 
 
-
-
 def make_review(review_text: str, user: User, book: Book, rating: int):
     review = Review(book, review_text, rating, user)
     user.add_review(review)
     book.add_review(review)
-
     return review
-
-
-

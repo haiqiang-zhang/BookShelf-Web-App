@@ -13,8 +13,8 @@ users_table = Table(
     'users', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
     Column('user_name', String(255), unique=True, nullable=False),
-    Column('password', String(255), nullable=False),
-    Column('pages_read', Integer)
+    Column('password', String(255), nullable=False)
+    # Column('pages_read', Integer)
 )
 
 reviews_table = Table(
@@ -34,9 +34,9 @@ books_table = Table(
     Column('description', String(255)),
     Column('release_year', Integer),
     Column('image_url', String(255)),
-    Column('rating', Integer),
+    # Column('rating', Integer),
     Column('num_pages', Integer),
-    Column('rating_count', Integer),
+    # Column('rating_count', Integer),
     Column('publisher_id', Integer, ForeignKey('publishers.publisher_id'))
 )
 
@@ -101,7 +101,7 @@ def map_model_to_tables():
     mapper(model.User, users_table, properties={
         '_User__user_name': users_table.c.user_name,
         '_User__password': users_table.c.password,
-        '_User__pages_read': users_table.c.pages_read,
+        # '_User__pages_read': users_table.c.pages_read,
         '_User__reviews': relationship(model.Review, backref='_Review__user'),
         '_User__read_books': relationship(
             model.Book,
@@ -136,8 +136,8 @@ def map_model_to_tables():
         '_Book__description': books_table.c.description,
         '_Book__release_year': books_table.c.release_year,
         '_Book__image_url': books_table.c.image_url,
-        '_Book__rating': books_table.c.rating,
-        '_Book__rating_count': books_table.c.rating_count,
+        # '_Book__rating': books_table.c.rating,
+        # '_Book__rating_count': books_table.c.rating_count,
         '_Book__num_pages': books_table.c.num_pages,
         '_Book__reviews': relationship(model.Review, backref='_Review__book'),
         '_Book__tags': relationship(model.Tag, secondary=books_tags_table, back_populates='_Tag__tagged_books'),

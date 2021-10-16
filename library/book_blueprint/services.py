@@ -115,6 +115,8 @@ def delete_read_book_service(book_id:int, user_name:str, repo_instance:AbstractR
     book = repo_instance.get_book(book_id)
     user = repo_instance.get_user(user_name)
     user.read_books.remove(book)
+    # if book.num_pages is not None:
+    #     user.pages_read -= book.num_pages
     repo_instance.commit()
 
 

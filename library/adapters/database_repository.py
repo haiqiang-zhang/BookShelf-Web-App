@@ -42,6 +42,7 @@ class SessionContextManager:
         if not self.__session is None:
             self.__session.close()
 
+
 class SqlAlchemyRepository(AbstractRepository):
     def __init__(self, session_factory):
         self._session_cm = SessionContextManager(session_factory)
@@ -77,7 +78,6 @@ class SqlAlchemyRepository(AbstractRepository):
         with self._session_cm as scm:
             scm.session.add(book)
             scm.commit()
-
 
     def get_book(self, id: int) -> Book:
         book = None
@@ -151,7 +151,6 @@ class SqlAlchemyRepository(AbstractRepository):
     def get_tags(self):
         return self._session_cm.session.query(Tag).all()
 
-
     def add_review(self, review: Review):
         super().add_review(review)
         with self._session_cm as scm:
@@ -161,7 +160,7 @@ class SqlAlchemyRepository(AbstractRepository):
     def get_reviews(self):
         return self._session_cm.session.query(Review).all()
 
-    def add_publisher(self, publisher:Publisher):
+    def add_publisher(self, publisher: Publisher):
         with self._session_cm as scm:
             scm.session.add(publisher)
             scm.commit()
@@ -169,15 +168,13 @@ class SqlAlchemyRepository(AbstractRepository):
     def get_publishers(self):
         return self._session_cm.session.query(Publisher).all()
 
-
-    def add_author(self, author:Author):
+    def add_author(self, author: Author):
         with self._session_cm as scm:
             scm.session.add(author)
             scm.commit()
 
     def get_authors(self) -> List[Author]:
         return self._session_cm.session.query(Author).all()
-
 
     def get_author(self, id: int):
         author = None
@@ -190,4 +187,3 @@ class SqlAlchemyRepository(AbstractRepository):
     def commit(self):
         with self._session_cm as scm:
             scm.commit()
-

@@ -376,11 +376,9 @@ class TestUser:
         books[1].num_pages = 121
         user = User("Martin", "pw12345")
         assert user.read_books == []
-        assert user.pages_read == 0
         for book in books:
             user.read_a_book(book)
         assert str(user.read_books) == "[<Book Harry Potter, book id = 874658>, <Book Lord of the Rings, book id = 89576>]"
-        assert user.pages_read == 228
 
     def test_user_reviews(self):
         books = [Book(874658, "Harry Potter"), Book(89576, "Lord of the Rings")]
