@@ -30,19 +30,20 @@ Please use Python version 3.6 or newer versions for development. Some of the dep
 ## Installation
 
 **Installation via requirements.txt**
-###Linux
+
+### Linux
 ```shell
 $ python3 -m venv venv
 $ source ./venv/bin/activate
 $ pip install -r requirements.txt
 ```
-###MacOS
+### MacOS
 ```shell
 $ python3 -m venv venv
 $ source ./venv/bin/activate
 $ pip install -r requirements.txt
 ```
-###Windows
+### Windows
 ```shell
 $ python3 -m venv venv
 $ \venv\bin\activate
