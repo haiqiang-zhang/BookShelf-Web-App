@@ -1,0 +1,36 @@
+,Marking Guide,Please put in the team name below AND use it as the name of the sheet. Create a new sheet for each team! Use e.g. DBBrowserFor SQLite to inspect the database.,Unnamed: 2,Unnamed: 3,Unnamed: 4
+0,,,,,
+1,Team,NJUST-Team1,,,
+2,,,,,
+3,Question Nr,Grade,Question,Answer ,Further comments to describe details of the submission aspects.
+4,1,General,"Does the web application start on localhost without an error when calling 'flask run'? If not, what is required to get it running?",Yes,
+5,2,,"Does the first call of 'flask run' generate a sqlite database file (filename.db)? If there is a database file checked in, please test the application also by removing this checked in database file -> the application has to populate its database from scratch!",Yes,93 test cases 
+6,3,,"Do the tests for the database component run without failure when calling 'python -m pytest tests' on the terminal? Or by right clicking the tests in PyCharm? Tests might be in a new folder (e.g. tests_db), or in the original tests folder of the application.",Yes,
+7,4,Grade C,"Grade C: If the web application contains a list of books that are displayed and can be navigated, is this list also reflected in the database?",Yes,
+8,5,,"Grade C: Inspect the database, modify the database, e.g. by adding another book. Is this change reflected in the web application upon next startup?",Yes,
+9,6,,"Grade C: If the web application links books with authors and/or publishers (e.g. if you click on a publisher, you would get the books of this publisher, same for author), are authors and/or publishers also properly reflected in the database by tables?",Yes,
+10,7,,Grade C: Inspect the database for authors and publishers. Are changes in the database correctly transferred to the web application?,Yes,
+11,8,,Grade C requirement: Are their specific unit tests for populating the database? How many?,Yes,
+12,9,,Grade C requirement: Are their specific unit and integration tests for testing the grade C requirements on the database repository? How many?,Yes, 12 test cases 
+13,10,Grade B,"Grade B: Are users persisted in the database? If you register a new user, is the new user contained in the database?",Yes,
+14,11,,"Grade B: After registering a new user, and restarting the application, can you still login to the application with this new user? ",Yes,
+15,12,,"Grade B: If reviews and/or ratings are available in the application, are these also persisted in the database, after restarting the application? (On first start, write a review/do a rating, on second start, see if this review/rating is still connected to the same book?)",Yes,
+16,13,,"Grade B: If search functionality is available, does it work within the database implementation?",Yes,
+17,14,,Grade B requirement: Are their specific unit and integration tests for testing the grade B requirements on the database repository? How many?,Yes, 12 test cases 
+18,15,Grade A,"Grade A requirement: Are the cool features also working with the database version of the web application? List those that are working, and those that are not working, by naming them and describing them shortly.",Yes,favourite section and tag and read list 
+19,16,,"Grade A requirement: If applicable, are the cool features also persisted in the database? For example a favorite books list should be reflected in a database table, and changing a record in the database should have an effect on the web application.",Yes,
+20,17,,Grade A requirement: Are their specific unit and integration tests for testing the grade A requirements on the database repository? How many?,Yes,need more tests cases 
+21,,,,,
+22,,,,,
+23,,,,,
+24,,,,,
+25,Overall Assessment,,,,
+26,Grade (A+/A/B/C/D),A,,,
+27,within grade (low/middle/high),high,,,
+28,,,,,
+29,,,,,
+30,,A/A+,,,
+31,,,,,
+32,,,,,
+33,,,,,
+34,Marks,12,,,
