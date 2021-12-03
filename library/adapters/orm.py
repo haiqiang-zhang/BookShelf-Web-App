@@ -94,9 +94,6 @@ publishers_table = Table(
     Column('name', String(255), nullable=False)
 )
 
-
-
-
 def map_model_to_tables():
     mapper(model.User, users_table, properties={
         '_User__user_name': users_table.c.user_name,
