@@ -17,10 +17,6 @@ l will introduce the features of each unit separately in _**Report.pdf**_.
 
 Now the web app support database by SQLite.
 
-## Website
-I have deployed the web app to a server. You can access the website directly to have fun.
-The Website is: http://165.232.174.128:5000/
-
 
 ## Python version
 
